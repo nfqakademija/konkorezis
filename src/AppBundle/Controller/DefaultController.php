@@ -5,9 +5,9 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 # TODO: will be used in a future
-#use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-#use Symfony\Component\HttpFoundation\Request;
-#use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -20,10 +20,11 @@ class DefaultController extends Controller
         return $this->render('default/index.html.twig');
     }
     /**
-     * @Route("/dashboard/{count}", name="dashboard")
+     * @Route("/dashboard", name="dashboard")
      */
-    public function dashAction($count)
+    public function dashAction()
     {
+        $count = 15;
         return $this->render('default/dashboard.html.twig',array('count' => $count));
     }
     /**
@@ -38,7 +39,8 @@ class DefaultController extends Controller
      */
     public function myordersAction()
     {
-        return $this->render('default/myorders.html.twig');
+        $count = 5;
+        return $this->render('default/myorders.html.twig',array('count' => $count));
     }
 
 }
