@@ -1,9 +1,3 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
-hello:
-    path:     /hello/{name}
-    defaults: { _controller: AppBundle:Hello:index}
-contact:
-    path:     /contact
-    defaults: { _controller: AppBundle:Main:contact}
