@@ -2,23 +2,27 @@
 
 {% block body %}
     {{ include('default/navbar.html.twig') }}
-
-
-
-
-
-
     <div class="container">
+        {% for i in range(1, count) %}
+            <div class="col-sm-6 col-md-3 summary-container">
+                <div class="summary-content">
+                    {% set name = 'Order Title' %}
+                    <h2>{{ name }}</h2>
+                    {% set description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor accumsan " %}
+                    <p>{{ description }}</p>
+                    {% set event_date = "2016-01-01 14:00" %}
+                    <p><b>Buying at: </b>{{ event_date }}</p>
+                    {% set address = "Didlaukio st. 59-603B, Vilnius"%}
+                    <p><b>Delivery address: </b>{{ address }}</p>
+                    <button type="button" class="btn btn-primary btn-group-justified">Details</button>
+                </div>
+            </div>
 
+        {% endfor %}
 
     </div>
 
 {% endblock %}
 {% block stylesheets %}
-    <style>
-
-
-    </style>
-
 
 {% endblock %}
