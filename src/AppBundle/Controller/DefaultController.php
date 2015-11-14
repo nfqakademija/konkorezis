@@ -18,6 +18,7 @@ class DefaultController extends Controller
     {
         /* Added a comment jurij */
         return $this->render('default/index.html.twig');
+
     }
     /**
      * @Route("/dashboard", name="dashboard")
