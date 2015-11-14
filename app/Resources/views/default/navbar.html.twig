@@ -1,9 +1,40 @@
 
+<!-- <
+    <hr/>
+
+    <div class="col-md-2"><button type="button" class="btn btn-success btn-lg nav_button">Open orders</button></div>
+    <div class="col-md-2"><button type="button" class="btn btn-success btn-lg nav_button">My orders</button></div>
+    <div class="col-md-2"><button type="button" class="btn btn-success btn-lg nav_button">Create order</button></div>
+    <div class="col-md-2"><button type="button" class="btn btn-success btn-lg nav_button">Logout</button></div>
+ -->
 <div class="container">
-    <div class="col-md-4"></div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4"></div>
-    <h1>Navbar</h1>
+    <div class="col-md-3"><img class="logo" src="http://www.synesisitltd.com/images/call_centre.gif"/></div>
+    <div class="col-md-9">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+
+
+                    <ul class="nav navbar-nav nav-tabs nav-justified">
+                        <li><a href="/dashboard">Open orders</a></li>
+                        <li><a href="/myorders">My orders</a></li>
+                        <li><a href="/create">Create order</a></li>
+                        <li><a href="/">Logout</a></li>
+                    </ul>
+            </div>
+        </nav>
+    </div>
 </div>
 
+
+{% block stylesheets %}
+    <style>
+        .logo{
+            height: 50%;
+            width: 50%;
+        }
+
+
+    </style>
+
+
+{% endblock %}
