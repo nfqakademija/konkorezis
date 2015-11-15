@@ -12,15 +12,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class OrdersController extends Controller
 {
     /**
-     * @Route("/orders/open-orders/{per_page}/{page_number}", name="orders_open")
+     * @Route(
+     *     "/orders/open-orders/{per_page}/{page_number}",
+     *     name="orders_open",
+     *     defaults={
+     *          "per_page" : 12,
+     *          "page_number" : 1
+     *     },
+     *     requirements={
+     *          "per_page": "\d+",
+     *          "page_number": "\d+"
+     *     }
+     * )
      */
     public function openOrdersAction($per_page, $page_number)
     {
-        return $this->render('default/dashboard.html.twig',array('count' => $per_page));
+        return $this->render('default/open_orders.html.twig', array('count' => $per_page));
     }
 
     /**
-     * @Route("/orders/create", name="orders_create")
+     * @Route(
+     *     "/orders/create",
+     *     name="orders_create"
+     * )
      */
     public function createAction()
     {
@@ -28,11 +42,31 @@ class OrdersController extends Controller
     }
 
     /**
-     * @Route("/orders/history", name="orders_history")
+     * @Route(
+     *     "/orders/details/{order_id}",
+     *     name="orders_details",
+     *     requirements={
+     *          "order_id": "\d+",
+     *     }
+     * )
      */
-    public function historyAction()
+    public function detailsAction($order_id)
     {
-        return $this->render('default/my_orders.html.twig');
+        return $this->render('default/index.html.twig');
+    }
+
+    /** Shown for host
+     * @Route(
+     *     "/orders/summary/{order_id}",
+     *     name="orders_summary",
+     *     requirements={
+     *          "order_id": "\d+",
+     *     }
+     * )
+     */
+    public function summaryAction($order_id)
+    {
+        return $this->render('default/index.html.twig');
     }
 }
 
