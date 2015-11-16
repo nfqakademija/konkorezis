@@ -55,7 +55,9 @@ class OrdersController extends Controller
      */
     public function detailsAction($order_id)
     {
-        return $this->render('default/index.html.twig');
+        return $this->render('default/details.html.twig', array(
+            'order_id' => $order_id
+        ));
     }
 
     /** Shown for host

@@ -54,7 +54,10 @@ class UserController extends Controller
      */
     public function historyAction($per_page, $page_number)
     {
-        return $this->render('default/my_orders.html.twig', array('count' => $per_page));
+        return $this->render('default/my_orders.html.twig', array(
+            'per_page' => $per_page,
+            'page_number' => $page_number
+        ));
     }
 
 }
