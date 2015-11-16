@@ -3,11 +3,19 @@
     margin: 0 auto;
 
 
-    /*border: 1px dashed black;background-color: skyblue;*/
 }
 .summary-content{
      border: 1px dashed black;
      border-radius: 5%;
      padding: 0 10px 10px 10px;
      /*background-color: moccasin;*/
+}
+.product-info{
+    border: 1px dashed black;
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+}
+.product-quantity{
+    padding: 20px;
 }

@@ -27,7 +27,10 @@ class OrdersController extends Controller
      */
     public function openOrdersAction($per_page, $page_number)
     {
-        return $this->render('default/open_orders.html.twig', array('count' => $per_page));
+        return $this->render('default/open_orders.html.twig', array(
+            'per_page' => $per_page,
+            'page_number' => $page_number
+            ));
     }
 
     /**
@@ -52,7 +55,9 @@ class OrdersController extends Controller
      */
     public function detailsAction($order_id)
     {
-        return $this->render('default/index.html.twig');
+        return $this->render('default/details.html.twig', array(
+            'order_id' => $order_id
+        ));
     }
 
     /** Shown for host
