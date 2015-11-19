@@ -14,7 +14,7 @@
                     <p><b>Buying at: </b>{{ event_date }}</p>
                     {% set address = "Didlaukio st. 59-603B, Vilnius"%}
                     <p><b>Delivery address: </b>{{ address }}</p>
-                    <div class="btn btn-default btn-group-justified"><a href="{{ path('orders_details', {'order_id': order_number }) }}">Details</a></div>
+                    <div class="btn btn-default btn-group-justified"><a href="{{ path('orders_details', {'order_id': order_number}) }}">Details</a></div>
                 </div>
             </div>
         {% endfor %}
