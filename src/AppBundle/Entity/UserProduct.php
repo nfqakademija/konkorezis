@@ -73,5 +73,5 @@ class UserProduct
      * @ORM\ManyToOne(targetEntity="User", inversedBy="userProducts")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $category;
+    protected $user;
 }
