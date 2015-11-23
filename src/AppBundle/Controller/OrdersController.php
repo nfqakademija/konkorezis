@@ -4,10 +4,8 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-# TODO: will be used in a future
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-#use Symfony\Component\HttpFoundation\Request;
-#use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class OrdersController extends Controller
 {
@@ -60,7 +58,9 @@ class OrdersController extends Controller
         ));
     }
 
-    /** Shown for host
+    /**
+     * Shown for host only
+     *
      * @Route(
      *     "/orders/summary/{order_id}",
      *     name="orders_summary",
@@ -71,7 +71,35 @@ class OrdersController extends Controller
      */
     public function summaryAction($order_id)
     {
+        // TODO: check whether user can view summary (is it users' order)
+
+        // TODO: render summary view
         return $this->render('default/index.html.twig');
+    }
+
+    /**
+     * @Route(
+     *     "/orders/delete/{order_id}",
+     *     name="order_delete",
+     *     requirements={
+     *          "order_id": "\d+",
+     *     }
+     * )
+     */
+    public function deleteAction($order_id)
+    {
+        // TODO: check whether user can delete order (is it users' order)
+
+        // TODO: remove users' order
+
+        // Create flash message for successful removal
+        $this->addFlash(
+            'notice',
+            'Order successfully deleted!'
+        );
+
+        // Redirect to users_orders screen to refresh list
+        return new RedirectResponse($this->generateUrl('orders_open'));
     }
 }
 
