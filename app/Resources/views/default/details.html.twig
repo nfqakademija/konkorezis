@@ -1,8 +1,7 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
     {{ include('default/navigation_bar.html.twig') }}
-    <div class="container text-center">
+    <div class="text-center">
         <div class="col-md-8">
             <h1>Order number {{ order_id }}</h1>
             {% set supplier_name = 'Cili-Pica' %}
@@ -16,29 +15,27 @@
             <img src="http://i.stack.imgur.com/yEshb.gif"/>
         </div>
         <div>
-            <div class="col-md-4"><b>Buying time:</b> YYYY-MM-DD HH:MM</div>
-            <div class="col-md-4"><b>Closing after:</b> DD days</div>
-            <div class="col-md-4"><b>Delivery address:</b> Didlaukio 59, Vilnius</div>
+            {% set event_date = 'YYYY-MM-DD HH:MM' %}
+            <div class="col-md-4"><b>Buying time: </b>{{ event_date }}</div>
+            {% set order_deadline_date = 'DD' %}
+            <div class="col-md-4"><b>Closing after: </b>{{ order_deadline_date }} days</div>
+            {% set address = 'Didlaukio 59, Vilnius' %}
+            <div class="col-md-4"><b>Delivery address: </b>{{ address }}</div>
         </div>
-        {% for i in range(1, 4) %}
-            <div class="col-md-12 product-info">
-                <h1>Product name | Feature of a product</h1>
-                <div class="col-md-4">
-                    Price: 5 EU
-                    <button class="btn btn-default btn-group-justified"> - </button>
-                </div>
-                <div class="col-md-4 product-quantity">
-                    {% set count = 0 %}
-                    <input type="text" class="form-control text-center" value="{{ count }}">
-                </div>
-                <div class="col-md-4">
-                    product-link
-                    <button class="btn btn-default btn-group-justified"> + </button>
-                </div>
-            </div>
+        {#
+        {% for i in range(0, 0) %}
+            {{ include('default/product.html.twig') }}
         {% endfor %}
-
+        #}
     </div>
-
-
+    <div id="results"><h2>here are results</h2></div>
+    <div class="new-product-box col-md-12">
+        <div class="new-product-info">
+            {{ include('default/product.html.twig') }}
+        </div>
+        <div class="new-product-form">
+            {{include('default/create_product.html.twig')}}
+        </div>
+    </div>
+    <button class="button btn btn-success btn-new-product">New product</button>
 {% endblock %}

@@ -41,6 +41,16 @@ class OrdersController extends Controller
     {
         return $this->render('default/create_order.html.twig');
     }
+    /**
+     * @Route(
+     *     "/orders/create_product",
+     *     name="orders_create_product"
+     * )
+     */
+    public function createProductAction()
+    {
+        return $this->render('default/create_product.html.twig');
+    }
 
     /**
      * @Route(

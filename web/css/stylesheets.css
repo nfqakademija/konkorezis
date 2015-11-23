@@ -1,8 +1,11 @@
+.logo{
+    height: 50%;
+    width: 50%;
+}
+
 .summary-container{
     width: 50%;
     margin: 0 auto;
-
-
 }
 .summary-content{
      border: 1px dashed black;
@@ -19,3 +22,18 @@
 .product-quantity{
     padding: 20px;
 }
+.details-info{
+   padding-bottom: 30px;
+    border: 2px solid red;
+}
+.new-product-box{
+    margin-top:40px;
+}/*
+.form-new-product{
+    margin-top:20px;
+    padding-top:20px;
+    border: 1px solid blue;
+}
+.new-product-box{
+    padding-top:30px;
+}*/
