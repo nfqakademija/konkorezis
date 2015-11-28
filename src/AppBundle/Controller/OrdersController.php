@@ -24,10 +24,10 @@ class OrdersController extends Controller
      */
     public function openOrdersAction($per_page, $page_number)
     {
-        // Retrieve products for a specific page
+        // Retrieve orders for a specific page
         $orders = $this->getDoctrine()
             ->getRepository('AppBundle:Orders')
-            ->getOrdersForPage($per_page, $page_number);
+            ->getOpenOrdersForPage($per_page, $page_number);
 
         return $this->render('default/open_orders.html.twig', array(
             'orders'        => $orders,

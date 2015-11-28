@@ -67,13 +67,13 @@ class UserProduct
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="userProducts")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
-    protected $product;
+    protected $productId;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="userProducts")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user;
+    protected $userId;
 
     /**
      * Set product
@@ -121,5 +121,53 @@ class UserProduct
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set productId
+     *
+     * @param \AppBundle\Entity\Product $productId
+     *
+     * @return UserProduct
+     */
+    public function setProductId(\AppBundle\Entity\Product $productId = null)
+    {
+        $this->productId = $productId;
+
+        return $this;
+    }
+
+    /**
+     * Get productId
+     *
+     * @return \AppBundle\Entity\Product
+     */
+    public function getProductId()
+    {
+        return $this->productId;
+    }
+
+    /**
+     * Set userId
+     *
+     * @param \AppBundle\Entity\User $userId
+     *
+     * @return UserProduct
+     */
+    public function setUserId(\AppBundle\Entity\User $userId = null)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUserId()
+    {
+        return $this->userId;
     }
 }
