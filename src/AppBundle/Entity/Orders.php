@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Orders
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\OrdersRepository")
  */
 class Orders
 {
@@ -297,5 +297,62 @@ class Orders
     {
         $this->products = new ArrayCollection();
     }
-}
 
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Orders
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Add product
+     *
+     * @param \AppBundle\Entity\Product $product
+     *
+     * @return Orders
+     */
+    public function addProduct(\AppBundle\Entity\Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \AppBundle\Entity\Product $product
+     */
+    public function removeProduct(\AppBundle\Entity\Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+}

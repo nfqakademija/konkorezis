@@ -2,19 +2,14 @@
 {% block body %}
     {{ include('default/navigation_bar.html.twig') }}
     <div class="container">
-        {% for i in range(1, per_page) %}
+        {% for order in orders %}
             <div class="col-sm-6 col-md-3 summary-container">
                 <div class="summary-content">
-                    {% set name = 'Order Title' %}
-                    {% set order_number = i+(page_number*per_page)-per_page %}
-                    <h2>Order number {{ order_number }}</h2>
-                    {% set description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor accumsan " %}
-                    <p>{{ description }}</p>
-                    {% set event_date = "2016-01-01 14:00" %}
-                    <p><b>Buying at: </b>{{ event_date }}</p>
-                    {% set address = "Didlaukio st. 59-603B, Vilnius"%}
-                    <p><b>Delivery address: </b>{{ address }}</p>
-                    <div class="btn btn-default btn-group-justified"><a href="{{ path('orders_details', {'order_id': order_number}) }}">Details</a></div>
+                    <h2>{{ order.name }}</h2>
+                    <p>{{ order.description }}</p>
+                    <p><b>Buying at: </b>{{ order.eventDate|date("Y-m-d H:i:s") }}</p>
+                    <p><b>Delivery address: </b>{{ order.address }}</p>
+                    <div class="btn btn-default btn-group-justified"><a href="{{ path('orders_details', {'order_id': order.id}) }}">Details</a></div>
                 </div>
             </div>
         {% endfor %}

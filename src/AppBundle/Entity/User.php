@@ -111,5 +111,72 @@ class User
         $this->orders = new ArrayCollection();
         $this->userProducts = new ArrayCollection();
     }
-}
 
+    /**
+     * Add order
+     *
+     * @param \AppBundle\Entity\Orders $order
+     *
+     * @return User
+     */
+    public function addOrder(\AppBundle\Entity\Orders $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \AppBundle\Entity\Orders $order
+     */
+    public function removeOrder(\AppBundle\Entity\Orders $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    /**
+     * Add userProduct
+     *
+     * @param \AppBundle\Entity\UserProduct $userProduct
+     *
+     * @return User
+     */
+    public function addUserProduct(\AppBundle\Entity\UserProduct $userProduct)
+    {
+        $this->userProducts[] = $userProduct;
+
+        return $this;
+    }
+
+    /**
+     * Remove userProduct
+     *
+     * @param \AppBundle\Entity\UserProduct $userProduct
+     */
+    public function removeUserProduct(\AppBundle\Entity\UserProduct $userProduct)
+    {
+        $this->userProducts->removeElement($userProduct);
+    }
+
+    /**
+     * Get userProducts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserProducts()
+    {
+        return $this->userProducts;
+    }
+}

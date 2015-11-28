@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -25,9 +24,15 @@ class OrdersController extends Controller
      */
     public function openOrdersAction($per_page, $page_number)
     {
+        // Retrieve products for a specific page
+        $orders = $this->getDoctrine()
+            ->getRepository('AppBundle:Orders')
+            ->getOrdersForPage($per_page, $page_number);
+
         return $this->render('default/open_orders.html.twig', array(
-            'per_page' => $per_page,
-            'page_number' => $page_number
+            'orders'        => $orders,
+            'per_page'      => $per_page,
+            'page_number'   => $page_number
             ));
     }
 
