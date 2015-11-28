@@ -48,11 +48,24 @@ class UserController extends Controller
      */
     public function historyAction($per_page, $page_number)
     {
-        // TODO: retrieve and pass data from DB
+        // TODO: retrieve current users' ID
+        $user_id = 1;
+
+        // Retrieve orders that user has created before
+        $created_orders = $this->getDoctrine()
+            ->getRepository('AppBundle:Orders')
+            ->getUsersCreatedOrdersForPage($per_page, $page_number, $user_id);
+
+        // Retrieve orders that user has took in part as a guest
+        $joined_orders = $this->getDoctrine()
+            ->getRepository('AppBundle:Orders')
+            ->getUsersJoinedOrdersForPage($per_page, $page_number, $user_id);
 
         return $this->render('default/my_orders.html.twig', array(
-            'per_page' => $per_page,
-            'page_number' => $page_number
+            'created_orders'      => $created_orders,
+            'joined_orders'      => $joined_orders,
+            'per_page'      => $per_page,
+            'page_number'   => $page_number
         ));
     }
 
