@@ -1,19 +1,17 @@
-{% set title = 'Product name | Feature of a product' %}
 {{ app.request.queryString }}
 <div class="col-md-12 product-info">
-    <h1>{{ title }}</h1>
+    <h1>{{ product.title }}</h1>
     <div class="col-md-4">
-        {% set price = 6 %}
-        Price: {{ price }} EU
+        Price: {{ product.price }} EU
         <button class="btn btn-default btn-group-justified"> - </button>
     </div>
     <div class="col-md-4 product-quantity">
+        {# TODO: show real initial counter, currently unable to select it from entities #}
         {% set count = 0 %}
         <input type="text" class="form-control text-center" value="{{ count }}">
     </div>
     <div class="col-md-4">
-        {% set link = 'product-link' %}
-        {{ link }}
+        <a href="{{ product.link }}" target="_blank">View product</a>
         <button class="btn btn-default btn-group-justified"> + </button>
     </div>
 </div>

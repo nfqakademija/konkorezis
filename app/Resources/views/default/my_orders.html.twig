@@ -11,7 +11,7 @@
                 <div class="summary-content">
                     <h2>{{ order.name }}</h2>
                     <p>{{ order.description }}</p>
-                    <p><b>Buying at: </b>{{ order.eventDate|date("Y-m-d H:i:s") }}</p>
+                    <p><b>Buying at: </b>{{ order.eventDate|date("Y-m-d H:i") }}</p>
                     <p><b>Delivery address: </b>{{ order.address }}</p>
                     <div class="btn btn-default btn-group-justified"><a href="{{ path('orders_details', {'order_id': order.id }) }}">Details</a></div>
                 </div>
