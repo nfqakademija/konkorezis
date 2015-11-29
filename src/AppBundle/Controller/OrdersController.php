@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Utilities;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -68,8 +69,40 @@ class OrdersController extends Controller
      */
     public function detailsAction($order_id)
     {
+        // Retrieve orders' details information for a details page
+        $order = $this->getDoctrine()
+            ->getRepository('AppBundle:Orders')
+            ->find($order_id);
+
+        if (!$order) {
+            // Create flash message for no order found
+            $this->addFlash(
+                'error',
+                'No order found for id: ' . $order_id . '!'
+            );
+
+            // Redirect to orders_open screen
+            return new RedirectResponse($this->generateUrl('orders_open'));
+        }
+
+        // Get time remaining to join order
+        $closing_after = Utilities::countTimeRemaining(
+            date_timestamp_get($order->getJoiningDeadline()));
+
+        $products = $order->getProducts();
+
+        foreach ($products as $product) {
+            $userProducts = $product->getUserProducts();
+            /* FIXME: this doesn't work, although it should
+             * foreach ($userProducts as $userProduct) {
+            }*/
+        }
+
         return $this->render('default/details.html.twig', array(
-            'order_id' => $order_id
+            'products'          => $products,
+            'closing_after'     => $closing_after,
+            'order'             => $order,
+            'order_id'          => $order_id
         ));
     }
 
