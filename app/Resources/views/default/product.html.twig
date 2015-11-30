@@ -6,9 +6,7 @@
         <button class="btn btn-default btn-group-justified"> - </button>
     </div>
     <div class="col-md-4 product-quantity">
-        {# TODO: show real initial counter, currently unable to select it from entities #}
-        {% set count = 0 %}
-        <input type="text" class="form-control text-center" value="{{ count }}">
+        <input type="text" class="form-control text-center" value="{{ product.getUserProducts[0].quantity }}">
     </div>
     <div class="col-md-4">
         <a href="{{ product.link }}" target="_blank">View product</a>

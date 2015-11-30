@@ -91,13 +91,6 @@ class OrdersController extends Controller
 
         $products = $order->getProducts();
 
-        foreach ($products as $product) {
-            $userProducts = $product->getUserProducts();
-            /* FIXME: this doesn't work, although it should
-             * foreach ($userProducts as $userProduct) {
-            }*/
-        }
-
         return $this->render('default/details.html.twig', array(
             'products'          => $products,
             'closing_after'     => $closing_after,
