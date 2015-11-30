@@ -50,6 +50,9 @@ class UserController extends Controller
     {
         // TODO: retrieve current users' ID
         $user_id = 1;
+        $user = $this->getDoctrine()
+            ->getRepository('AppBundle:User')
+            ->find(1);
 
         // Retrieve orders that user has created before
         $created_orders = $this->getDoctrine()
@@ -59,7 +62,7 @@ class UserController extends Controller
         // Retrieve orders that user has took in part as a guest
         $joined_orders = $this->getDoctrine()
             ->getRepository('AppBundle:Orders')
-            ->getUsersJoinedOrdersForPage($per_page, $page_number, $user_id);
+            ->getUsersJoinedOrdersForPage($per_page, $page_number, $user);
 
         return $this->render('default/my_orders.html.twig', array(
             'created_orders'      => $created_orders,

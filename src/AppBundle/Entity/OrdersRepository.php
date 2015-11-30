@@ -59,20 +59,20 @@ class OrdersRepository extends EntityRepository
      * limit of orders being displayed. Returns orders that user took part in as a guest;
      * @param $products_per_page
      * @param $page_number
-     * @param $user_id
+     * @param $user
      * @return array selected orders
      */
-    public function getUsersJoinedOrdersForPage($products_per_page, $page_number, $user_id)
+    public function getUsersJoinedOrdersForPage($products_per_page, $page_number, $user)
     {
         $query = $this->createQueryBuilder('o')
             ->select('o')
             ->from('AppBundle:UserProduct','up')
             ->from('AppBundle:Product','p')
-            ->where('up.userId = :userId')
+            ->where('up.user = :user')
             ->setParameter(
-                'userId', $user_id
+                'user', $user
             )
-            ->andWhere('p.id = up.productId')
+            ->andWhere('p = up.product')
             ->andWhere('o.id = p.orderId')
             ->getQuery();
 
