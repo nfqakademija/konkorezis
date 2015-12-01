@@ -11,6 +11,7 @@ parameters:
 framework:
     #esi:             ~
     #translator:      { fallbacks: ["%locale%"] }
+    translator:      ~
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -82,9 +83,8 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
-services:
-    lcn.weather_forecast.cache:
-            class: Doctrine\Common\Cache\PhpFileCache
-            arguments: [%kernel.cache_dir%]
-            calls:
-                - [setNamespace, ['lcn_weather_forecast']]
+# app/config/config.yml
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AppBundle\Entity\User
