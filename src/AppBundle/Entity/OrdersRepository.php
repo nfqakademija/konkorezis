@@ -38,14 +38,14 @@ class OrdersRepository extends EntityRepository
      * @param $user_id
      * @return array selected orders
      */
-    public function getUsersCreatedOrdersForPage($products_per_page, $page_number, $user_id)
+    public function getUsersCreatedOrdersForPage($products_per_page, $page_number, $user)
     {
         $query = $this->createQueryBuilder('o')
             ->select('o')
-            ->where('o.userId = :userId')
+            ->where('o.user = :user')
             ->andWhere()
             ->setParameters(array(
-                    'userId'           => $user_id)
+                    'user'           => $user)
             )
             ->getQuery();
 
@@ -73,7 +73,7 @@ class OrdersRepository extends EntityRepository
                 'user', $user
             )
             ->andWhere('p = up.product')
-            ->andWhere('o.id = p.orderId')
+            ->andWhere('o = p.orders')
             ->getQuery();
 
         return $query

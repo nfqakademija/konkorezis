@@ -2,10 +2,16 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\AjaxResponses;
+use AppBundle\Entity\Product;
+use AppBundle\Entity\UserProduct;
 use AppBundle\Utilities;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class OrdersController extends Controller
 {
@@ -47,7 +53,8 @@ class OrdersController extends Controller
     {
         return $this->render('default/create_order.html.twig');
     }
-    /**
+
+    /** TODO: add parameters requirements, post type
      * @Route(
      *     "/orders/create_product",
      *     name="orders_create_product"
@@ -55,7 +62,52 @@ class OrdersController extends Controller
      */
     public function createProductAction()
     {
-        return $this->render('default/create_product.html.twig');
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return new Response(AjaxResponses::$UNAUTHORIZED, Response::HTTP_UNAUTHORIZED);
+        }
+
+        $request = Request::createFromGlobals();
+
+        $order_id = 1;
+//        $order_id = $request->request->get('order_id', 0);
+        if ($order_id > 0) {
+            // Check whether order with such ID exist
+            $order = $this->getDoctrine()
+                ->getRepository('AppBundle:Orders')
+                ->find($order_id);
+
+            if (!$order) {
+                return new Response(AjaxResponses::$ORDER_NOT_FOUND, Response::HTTP_NOT_FOUND);
+            }
+
+            $title = 'the title';
+//        $title = $request->request->get('title');
+            $price = "2.00";
+//        $price = $request->request->get('price');
+            $link = 'http://the-menu.com';
+//        $link = $request->request->get('link');
+            $quantity = "1";
+//        $quantity = $request->request->get('quantity');
+            $user = $this->getUser();
+
+            $product = new Product();
+            $product->setTitle($title);
+            $product->setPrice($price);
+            $product->setLink($link);
+            $product->setOrders($order);
+
+            /*$userProduct = new UserProduct();
+            $userProduct->setProduct($product);
+            $userProduct->setQuantity($quantity);
+            $userProduct->setUser($user);*/
+
+            $em = $this->getDoctrine()->getManager();
+            //$em->persist($userProduct);
+            $em->persist($product);
+            $em->flush();
+        }
+
+        return new Response(AjaxResponses::$OK, Response::HTTP_OK);
     }
 
     /**
@@ -142,5 +194,7 @@ class OrdersController extends Controller
         // Redirect to users_orders screen to refresh list
         return new RedirectResponse($this->generateUrl('orders_open'));
     }
+
+
 }
 
