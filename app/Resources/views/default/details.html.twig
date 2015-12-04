@@ -18,20 +18,15 @@
             {% set address = 'Didlaukio 59, Vilnius' %}
             <div class="col-md-4"><b>Delivery address: </b>{{ order.address }}</div>
         </div>
-        {# FIXME: this is a workaround to a variable 'product' being not accesible in included layout.
-        Variables are accessed only if they are 'set' beffore trying to access them. #}
-        {# TODO: show only if products > 0 #}
-        {% set product = '' %}
-        {% for prod in products %}
-            {% set product = prod %}
+        {% for product in products %}
             {{ include('default/product.html.twig') }}
         {% endfor %}
     </div>
     <div id="results"><h2>here are results</h2></div>
     <div class="new-product-box col-md-12">
-        <div class="new-product-info">
+        {#<div class="new-product-info">
             {{ include('default/product.html.twig') }}
-        </div>
+        </div>#}
         <div class="new-product-form">
             {{include('default/create_product.html.twig')}}
         </div>

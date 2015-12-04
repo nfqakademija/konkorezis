@@ -80,9 +80,9 @@ class OrdersController extends Controller
                 return new Response(AjaxResponses::$ORDER_NOT_FOUND, Response::HTTP_NOT_FOUND);
             }
 
-            $title = 'the title';
+            $title = 'the title3';
 //        $title = $request->request->get('title');
-            $price = "2.00";
+            $price = "12.00";
 //        $price = $request->request->get('price');
             $link = 'http://the-menu.com';
 //        $link = $request->request->get('link');
@@ -96,15 +96,17 @@ class OrdersController extends Controller
             $product->setLink($link);
             $product->setOrders($order);
 
-            /*$userProduct = new UserProduct();
+            $userProduct = new UserProduct();
             $userProduct->setProduct($product);
             $userProduct->setQuantity($quantity);
-            $userProduct->setUser($user);*/
+            $userProduct->setUser($user);
+
+            $product->addUserProduct($userProduct);
 
             $em = $this->getDoctrine()->getManager();
-            //$em->persist($userProduct);
+            $em->persist($userProduct);
             $em->persist($product);
-            $em->flush();
+            //$em->flush();
         }
 
         return new Response(AjaxResponses::$OK, Response::HTTP_OK);

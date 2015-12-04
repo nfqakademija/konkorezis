@@ -24,11 +24,7 @@ class UserController extends Controller
      */
     public function historyAction($per_page, $page_number)
     {
-        // TODO: retrieve current users' ID
-        $user_id = 1;
-        $user = $this->getDoctrine()
-            ->getRepository('AppBundle:User')
-            ->find(1);
+        $user = $this->getUser();
 
         // Retrieve orders that user has created before
         $created_orders = $this->getDoctrine()
