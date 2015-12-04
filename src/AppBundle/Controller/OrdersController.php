@@ -94,7 +94,7 @@ class OrdersController extends Controller
             $product->setTitle($title);
             $product->setPrice($price);
             $product->setLink($link);
-            $product->setOrderId($order_id);
+            $product->setOrders($order);
 
             /*$userProduct = new UserProduct();
             $userProduct->setProduct($product);
