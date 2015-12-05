@@ -17,19 +17,14 @@
             <div class="col-md-4"><b>Closing after: </b>{{ closing_after }}</div>
             <div class="col-md-4"><b>Delivery address: </b>{{ order.address }}</div>
         </div>
-        {# FIXME: this is a workaround to a variable 'product' being not accesible in included layout.
-        Variables are accessed only if they are 'set' beffore trying to access them. #}
-        {# TODO: show only if products > 0 #}
-        {% set product = '' %}
-        {% for prod in products %}
-            {% set product = prod %}
+        {% for product in products %}
             {{ include('default/product.html.twig') }}
         {% endfor %}
     </div>
     <div class="new-product-box col-md-12">
-        <div class="new-product-info">
+        {#<div class="new-product-info">
             {{ include('default/product.html.twig') }}
-        </div>
+        </div>#}
         <script type="text/javascript">
             var orderId = {{ order.id }};
         </script>
