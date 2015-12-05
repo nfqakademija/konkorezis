@@ -5,11 +5,7 @@
         <button class="btn btn-default btn-group-justified"> - </button>
     </div>
     <div class="col-md-4 product-quantity">
-        <input type="text" class="form-control text-center" value="{% if quantity is defined %}
-            {{ quantity }}
-        {% else %}
-            {{ product.getUserProducts[0].quantity }}
-        {% endif %}">
+        <input type="text" class="form-control text-center" value="{{ product.getUserProducts[0].quantity }}">
     </div>
     <div class="col-md-4">
         <a href="{{ product.link }}" target="_blank">View product</a>
