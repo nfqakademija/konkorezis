@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     {{ include('default/navigation_bar.html.twig') }}
-    <div class="text-center">
+    <div id="order_details" class="text-center">
         <div class="col-md-8">
             <h1>{{ order.name }}</h1>
             <div class="col-md-6"><h3>{{ order.supplierName }}</h3></div>
@@ -15,18 +15,19 @@
         <div>
             <div class="col-md-4"><b>Buying time: </b>{{ order.eventDate|date("Y-m-d H:i") }}</div>
             <div class="col-md-4"><b>Closing after: </b>{{ closing_after }}</div>
-            {% set address = 'Didlaukio 59, Vilnius' %}
             <div class="col-md-4"><b>Delivery address: </b>{{ order.address }}</div>
         </div>
         {% for product in products %}
             {{ include('default/product.html.twig') }}
         {% endfor %}
     </div>
-    <div id="results"><h2>here are results</h2></div>
     <div class="new-product-box col-md-12">
         {#<div class="new-product-info">
             {{ include('default/product.html.twig') }}
         </div>#}
+        <script type="text/javascript">
+            var orderId = {{ order.id }};
+        </script>
         <div class="new-product-form">
             {{include('default/create_product.html.twig')}}
         </div>

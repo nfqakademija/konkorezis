@@ -9,39 +9,40 @@ $(".new-product-info").hide();
         newClone.css('display', 'none');
         $( ".new-product-box" ).append(newClone);
         newClone.fadeIn( "slow", function() {
-            // Animation complete
         });
     });
 
     $(".btn-submit-product").click(function(){
-        var x = $(".form-new-product").serializeArray();
-        var productForm = [];
-        $.each(x, function(i, field){
-            $("#results").append(field.name + ":" + field.value + " ");
-            productForm[i] = field.value;
-        });
-        var newProductForm = $(".new-product-info:first");
-        var newClone = newProductForm.clone();
-        newClone.css('display', 'none');
-        $( ".new-product-box" ).append(newClone);
-        newClone.fadeIn( "slow", function() {
-            // Animation complete
-        });
         $(".new-product-form").hide();
+
+        // Send products' creation request and display newly added
+        // product (if addition is successful)
+        var request = $.ajax({
+            url: "/orders/create_product",
+            method: "POST",
+            data: {
+                order_id    : orderId,
+                price       : $("#price").val(),
+                quantity    : $("#quantity").val(),
+                title       : $("#title").val(),
+                link        : $("#link").val()
+            },
+            dataType: "html"
+        });
+
+        request.done(function( response ) {
+            $( "#order_details" ).append(response);
+            newClone.fadeIn( "slow", function() {
+            });
+        });
+
+        request.fail(function( jqXHR ) {
+            // TODO: alert about failed addition in better way
+            alert( "Adding new product failed: " + jqXHR.responseText);
+        });
     });
     $( ".form-new-product" ).submit(function( event ) {
         console.log( $( this ).serializeArray() );
         event.preventDefault();
     });
 });
-
-    /*$(".btn-submit-product").click(function(){
-        var newProduct = $(".new-product-info:first");
-        var newClone = newProduct.clone();
-        newClone.css('display', 'none');
-        $(".new-product-box" ).append(newClone);
-        newProduct.fadeIn("slow");
-        var newProductForm = $(".new-product-form");
-        newProductForm.fadeOut( "slow", function() {
-        });
-    });*/

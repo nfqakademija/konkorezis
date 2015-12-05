@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class OrdersController extends Controller
 {
@@ -21,12 +21,12 @@ class OrdersController extends Controller
      *     "/orders/open-orders/{per_page}/{page_number}",
      *     name="orders_open",
      *     defaults={
-     *          "per_page" : 12,
-     *          "page_number" : 1
+     *          "per_page":     12,
+     *          "page_number":  1
      *     },
      *     requirements={
-     *          "per_page": "\d+",
-     *          "page_number": "\d+"
+     *          "per_page":     "\d+",
+     *          "page_number":  "\d+"
      *     }
      * )
      */
@@ -91,6 +91,7 @@ class OrdersController extends Controller
      *     "/orders/create_product",
      *     name="orders_create_product"
      * )
+     * @Method("POST")
      */
     public function createProductAction()
     {
@@ -99,9 +100,8 @@ class OrdersController extends Controller
         }
 
         $request = Request::createFromGlobals();
+        $order_id = intval($request->request->get('order_id', 0));
 
-        $order_id = 1;
-//        $order_id = $request->request->get('order_id', 0);
         if ($order_id > 0) {
             // Check whether order with such ID exist
             $order = $this->getDoctrine()
@@ -112,15 +112,15 @@ class OrdersController extends Controller
                 return new Response(AjaxResponses::$ORDER_NOT_FOUND, Response::HTTP_NOT_FOUND);
             }
 
-            $title = 'the title3';
-//        $title = $request->request->get('title');
-            $price = "12.00";
-//        $price = $request->request->get('price');
-            $link = 'http://the-menu.com';
-//        $link = $request->request->get('link');
-            $quantity = "1";
-//        $quantity = $request->request->get('quantity');
+            $title = strval($request->request->get('title'));
+            $price = floatval($request->request->get('price'));
+            $link = strval($request->request->get('link'));
+            $quantity = intval($request->request->get('quantity'));
             $user = $this->getUser();
+
+            if ($price <= 0 || $quantity <= 0) {
+                return new Response(AjaxResponses::$WRONG_REQUEST_PARAMETERS, Response::HTTP_BAD_REQUEST);
+            }
 
             $product = new Product();
             $product->setTitle($title);
@@ -132,16 +132,21 @@ class OrdersController extends Controller
             $userProduct->setProduct($product);
             $userProduct->setQuantity($quantity);
             $userProduct->setUser($user);
-
             $product->addUserProduct($userProduct);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($userProduct);
             $em->persist($product);
-            //$em->flush();
-        }
+            $em->flush();
 
-        return new Response(AjaxResponses::$OK, Response::HTTP_OK);
+
+            return $this->render('default/product.html.twig', array(
+                'product'       => $product,
+                'quantity'      => $quantity
+            ));
+        } else {
+            return new Response(AjaxResponses::$WRONG_REQUEST_PARAMETERS, Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -149,7 +154,7 @@ class OrdersController extends Controller
      *     "/orders/details/{order_id}",
      *     name="orders_details",
      *     requirements={
-     *          "order_id": "\d+",
+     *          "order_id":     "\d+",
      *     }
      * )
      */
@@ -192,7 +197,7 @@ class OrdersController extends Controller
      *     "/orders/summary/{order_id}",
      *     name="orders_summary",
      *     requirements={
-     *          "order_id": "\d+",
+     *          "order_id":     "\d+",
      *     }
      * )
      */
@@ -209,7 +214,7 @@ class OrdersController extends Controller
      *     "/orders/delete/{order_id}",
      *     name="order_delete",
      *     requirements={
-     *          "order_id": "\d+",
+     *          "order_id":     "\d+",
      *     }
      * )
      */
