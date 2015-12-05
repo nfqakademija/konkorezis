@@ -44,14 +44,6 @@ class Product
     private $link;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="order_id", type="integer")
-     */
-    private $orderId;
-
-
-    /**
      * Get id
      *
      * @return integer
@@ -131,30 +123,6 @@ class Product
     public function getLink()
     {
         return $this->link;
-    }
-
-    /**
-     * Set orderId
-     *
-     * @param integer $orderId
-     *
-     * @return Product
-     */
-    public function setOrderId($orderId)
-    {
-        $this->orderId = $orderId;
-
-        return $this;
-    }
-
-    /**
-     * Get orderId
-     *
-     * @return integer
-     */
-    public function getOrderId()
-    {
-        return $this->orderId;
     }
 
     /**

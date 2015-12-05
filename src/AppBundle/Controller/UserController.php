@@ -33,7 +33,7 @@ class UserController extends Controller
         // Retrieve orders that user has created before
         $created_orders = $this->getDoctrine()
             ->getRepository('AppBundle:Orders')
-            ->getUsersCreatedOrdersForPage($per_page, $page_number, $user_id);
+            ->getUsersCreatedOrdersForPage($per_page, $page_number, $user);
 
         // Retrieve orders that user has took in part as a guest
         $joined_orders = $this->getDoctrine()
