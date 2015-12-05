@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Product
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class Product
 {
@@ -32,7 +32,7 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="price", type="decimal")
+     * @ORM\Column(name="price", type="decimal", precision=8, scale=2)
      */
     private $price;
 
@@ -172,5 +172,62 @@ class Product
     {
         $this->userProducts = new ArrayCollection();
     }
-}
 
+    /**
+     * Set orders
+     *
+     * @param \AppBundle\Entity\Orders $orders
+     *
+     * @return Product
+     */
+    public function setOrders(\AppBundle\Entity\Orders $orders = null)
+    {
+        $this->orders = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \AppBundle\Entity\Orders
+     */
+    public function getOrders()
+    {
+        return $this->orders;
+    }
+
+    /**
+     * Add userProduct
+     *
+     * @param \AppBundle\Entity\UserProduct $userProduct
+     *
+     * @return Product
+     */
+    public function addUserProduct(\AppBundle\Entity\UserProduct $userProduct)
+    {
+        $this->userProducts[] = $userProduct;
+
+        return $this;
+    }
+
+    /**
+     * Remove userProduct
+     *
+     * @param \AppBundle\Entity\UserProduct $userProduct
+     */
+    public function removeUserProduct(\AppBundle\Entity\UserProduct $userProduct)
+    {
+        $this->userProducts->removeElement($userProduct);
+    }
+
+    /**
+     * Get userProducts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserProducts()
+    {
+        return $this->userProducts;
+    }
+}

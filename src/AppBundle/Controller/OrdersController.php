@@ -2,8 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Utilities;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -25,9 +25,15 @@ class OrdersController extends Controller
      */
     public function openOrdersAction($per_page, $page_number)
     {
+        // Retrieve orders for a specific page
+        $orders = $this->getDoctrine()
+            ->getRepository('AppBundle:Orders')
+            ->getOpenOrdersForPage($per_page, $page_number);
+
         return $this->render('default/open_orders.html.twig', array(
-            'per_page' => $per_page,
-            'page_number' => $page_number
+            'orders'        => $orders,
+            'per_page'      => $per_page,
+            'page_number'   => $page_number
             ));
     }
 
@@ -63,8 +69,33 @@ class OrdersController extends Controller
      */
     public function detailsAction($order_id)
     {
+        // Retrieve orders' details information for a details page
+        $order = $this->getDoctrine()
+            ->getRepository('AppBundle:Orders')
+            ->find($order_id);
+
+        if (!$order) {
+            // Create flash message for no order found
+            $this->addFlash(
+                'error',
+                'No order found for id: ' . $order_id . '!'
+            );
+
+            // Redirect to orders_open screen
+            return new RedirectResponse($this->generateUrl('orders_open'));
+        }
+
+        // Get time remaining to join order
+        $closing_after = Utilities::countTimeRemaining(
+            date_timestamp_get($order->getJoiningDeadline()));
+
+        $products = $order->getProducts();
+
         return $this->render('default/details.html.twig', array(
-            'order_id' => $order_id
+            'products'          => $products,
+            'closing_after'     => $closing_after,
+            'order'             => $order,
+            'order_id'          => $order_id
         ));
     }
 

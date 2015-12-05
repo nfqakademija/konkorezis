@@ -3,30 +3,29 @@
     {{ include('default/navigation_bar.html.twig') }}
     <div class="text-center">
         <div class="col-md-8">
-            <h1>Order number {{ order_id }}</h1>
-            {% set supplier_name = 'Cili-Pica' %}
-            <div class="col-md-6"><h3>{{ supplier_name }}</h3></div>
-            {% set supplier_menu_link = 'http://cilipica.lt/menu.html' %}
-            <div class="col-md-6"> <h3>{{ supplier_menu_link }}</h3></div>
-            {% set description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.' %}
-            <div class="col-md-12">{{ description }}</div>
+            <h1>{{ order.name }}</h1>
+            <div class="col-md-6"><h3>{{ order.supplierName }}</h3></div>
+            <div class="col-md-6"> <h3><a href="{{ order.supplierMenuLink }}" target="_blank">View menu</a></h3></div>
+            <div class="col-md-12">{{ order.description }}</div>
         </div>
         <div class="col-md-4">
+            {# TODO: display address on google map #}
             <img src="http://i.stack.imgur.com/yEshb.gif"/>
         </div>
         <div>
-            {% set event_date = 'YYYY-MM-DD HH:MM' %}
-            <div class="col-md-4"><b>Buying time: </b>{{ event_date }}</div>
-            {% set order_deadline_date = 'DD' %}
-            <div class="col-md-4"><b>Closing after: </b>{{ order_deadline_date }} days</div>
+            <div class="col-md-4"><b>Buying time: </b>{{ order.eventDate|date("Y-m-d H:i") }}</div>
+            <div class="col-md-4"><b>Closing after: </b>{{ closing_after }}</div>
             {% set address = 'Didlaukio 59, Vilnius' %}
-            <div class="col-md-4"><b>Delivery address: </b>{{ address }}</div>
+            <div class="col-md-4"><b>Delivery address: </b>{{ order.address }}</div>
         </div>
-        {#
-        {% for i in range(0, 0) %}
+        {# FIXME: this is a workaround to a variable 'product' being not accesible in included layout.
+        Variables are accessed only if they are 'set' beffore trying to access them. #}
+        {# TODO: show only if products > 0 #}
+        {% set product = '' %}
+        {% for prod in products %}
+            {% set product = prod %}
             {{ include('default/product.html.twig') }}
         {% endfor %}
-        #}
     </div>
     <div id="results"><h2>here are results</h2></div>
     <div class="new-product-box col-md-12">

@@ -75,6 +75,7 @@ class UserProduct
      */
     protected $user;
 
+
     /**
      * Set product
      *
@@ -82,7 +83,7 @@ class UserProduct
      *
      * @return UserProduct
      */
-    public function setProduct(Product $product = null)
+    public function setProduct(\AppBundle\Entity\Product $product = null)
     {
         $this->product = $product;
 
@@ -106,7 +107,7 @@ class UserProduct
      *
      * @return UserProduct
      */
-    public function setUser(User $user = null)
+    public function setUser(\AppBundle\Entity\User $user = null)
     {
         $this->user = $user;
 

@@ -1,19 +1,15 @@
-{% set title = 'Product name | Feature of a product' %}
 {{ app.request.queryString }}
 <div class="col-md-12 product-info">
-    <h1>{{ title }}</h1>
+    <h1>{{ product.title }}</h1>
     <div class="col-md-4">
-        {% set price = 6 %}
-        Price: {{ price }} EU
-        <button class="btn btn-default btn-group-justified" id="sub"> - </button>
+        Price: {{ product.price }} EU
+        <button class="btn btn-default btn-group-justified"> - </button>
     </div>
     <div class="col-md-4 product-quantity">
-        {% set count = 0 %}
-        <input type="text" class="form-control text-center" value="{{ count }}">
+        <input type="text" class="form-control text-center" value="{{ product.getUserProducts[0].quantity }}">
     </div>
     <div class="col-md-4">
-        {% set link = 'product-link' %}
-        {{ link }}
-        <button class="btn btn-default btn-group-justified" id="add"> + </button>
+        <a href="{{ product.link }}" target="_blank">View product</a>
+        <button class="btn btn-default btn-group-justified"> + </button>
     </div>
 </div>
