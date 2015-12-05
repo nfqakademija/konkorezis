@@ -3,66 +3,60 @@
     {{ include('default/navigation_bar.html.twig') }}
     <div class="container">
 
-        <form class="form-horizontal">
+        <form class="form-horizontal" method="post" action="{{ path('orders_create') }}">
             <fieldset>
 
-                <!-- Form Name -->
                 <legend class="text-center">Create your order</legend>
 
-                <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textinput">Order title*</label>
                     <div class="col-md-5">
-                        <input id="textinput" name="textinput" placeholder="order title" class="form-control input-md" required="" type="text">
-
+                        <input id="order_name" name="order_name" placeholder="Order name" class="form-control input-md" required="" type="text">
                     </div>
                 </div>
 
-                <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textinput">Supplier*</label>
                     <div class="col-md-5">
-                        <input id="textinput" name="textinput" placeholder="supplier title" class="form-control input-md" required="" type="text">
-
+                        <input id="supplier_name" name="supplier_name" placeholder="Supplier name" class="form-control input-md" required="" type="text">
                     </div>
                 </div>
 
-                <!-- Text input-->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textinput">Supplier link</label>
                     <div class="col-md-5">
-                        <input id="textinput" name="textinput" placeholder="http://www.cilipica.lt" class="form-control input-md" type="text">
-
+                        <input id="supplier_link" name="supplier_link" placeholder="http://www.cilipica.lt" class="form-control input-md" type="text">
                     </div>
                 </div>
 
-                <!-- Textarea -->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textarea">Description*</label>
                     <div class="col-md-4">
-                        <textarea class="form-control" id="textarea" name="textarea">Add your order description</textarea>
+                        <textarea class="form-control" id="description" name="description" placeholder="Add your order description"></textarea>
                     </div>
                 </div>
 
-                <!-- Button (Double) -->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="button1id">Order date and time*</label>
-                    <div class="col-md-8">
-                        <button id="button1id" name="button1id" class="btn btn-success">Starts</button>
-                        <button id="button2id" name="button2id" class="btn btn-danger">Ends</button>
+                    <div class="col-md-5">
+                        <input id="order_date_time" name="order_date_time" placeholder="2015-12-17 19:00" class="form-control input-md" required="" type="text">
                     </div>
                 </div>
 
-                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="button1id">Joining date and time*</label>
+                    <div class="col-md-5">
+                        <input id="joining_date_time" name="joining_date_time" placeholder="2015-12-17 17:00" class="form-control input-md" required="" type="text">
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textinput">Address*</label>
                     <div class="col-md-5">
-                        <input id="textinput" name="textinput" placeholder="e.g. Didlaukio 59." class="form-control input-md" required="" type="text">
-
+                        <input id="event_address" name="event_address" placeholder="e.g. Didlaukio 59." class="form-control input-md" required="" type="text">
                     </div>
                 </div>
 
-                <!-- Button -->
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="singlebutton"></label>
                     <div class="col-md-4">

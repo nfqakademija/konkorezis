@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\AjaxResponses;
+use AppBundle\Entity\Orders;
 use AppBundle\Entity\Product;
 use AppBundle\Entity\UserProduct;
 use AppBundle\Utilities;
@@ -51,6 +52,37 @@ class OrdersController extends Controller
      */
     public function createAction()
     {
+        $request = Request::createFromGlobals();
+
+        if($request->isMethod('POST')){
+            $order = new Orders();
+            $user = $this->getUser();
+            $order_name = $request->request->get('order_name');
+            $supplier_name = $request->request->get('supplier_name');
+            $supplier_link = $request->request->get('supplier_link');
+            $description = $request->request->get('description');
+            $order_date_time = $request->request->get('order_date_time');
+            $joining_date_time = $request->request->get('joining_date_time');
+            $event_address = $request->request->get('event_address');
+
+            $order->setUser($user);
+
+            $order->setName($order_name);
+            $order->setSupplierName($supplier_name);
+            $order->setSupplierMenuLink($supplier_link);
+            $order->setDescription($description);
+            $order->setAddress($event_address);
+            $order->setEventDate(date_create($order_date_time));
+            $order->setJoiningDeadline(date_create($joining_date_time));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($order);
+            $em->flush();
+
+            return new RedirectResponse($this->generateUrl('orders_details',array('order_id' => $order->getId())));
+
+        }
+
         return $this->render('default/create_order.html.twig');
     }
 
