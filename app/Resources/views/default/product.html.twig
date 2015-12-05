@@ -1,12 +1,15 @@
-{{ app.request.queryString }}
 <div class="col-md-12 product-info">
     <h1>{{ product.title }}</h1>
     <div class="col-md-4">
-        Price: {{ product.price }} EU
+        Price: {{ product.price }} €
         <button class="btn btn-default btn-group-justified"> - </button>
     </div>
     <div class="col-md-4 product-quantity">
-        <input type="text" class="form-control text-center" value="{{ product.getUserProducts[0].quantity }}">
+        <input type="text" class="form-control text-center" value="{% if quantity is defined %}
+            {{ quantity }}
+        {% else %}
+            {{ product.getUserProducts[0].quantity }}
+        {% endif %}">
     </div>
     <div class="col-md-4">
         <a href="{{ product.link }}" target="_blank">View product</a>

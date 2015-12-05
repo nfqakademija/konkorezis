@@ -16,4 +16,6 @@ class AjaxResponses
     public static $UNAUTHORIZED = "Unauthorized access! Please login first.";
 
     public static $OK = "OK";
+
+    public static $WRONG_REQUEST_PARAMETERS = "Wrong request parameters!";
 }
