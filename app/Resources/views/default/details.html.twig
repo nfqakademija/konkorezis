@@ -22,12 +22,10 @@
         {% endfor %}
     </div>
     <div class="new-product-box col-md-12">
-        {#<div class="new-product-info">
-            {{ include('default/product.html.twig') }}
-        </div>#}
         <script type="text/javascript">
             var orderId = {{ order.id }};
         </script>
+        {# FIXME: currently we are able to add product only once, second time doesn't call ajax... #}
         <div class="new-product-form">
             {{include('default/create_product.html.twig')}}
         </div>

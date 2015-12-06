@@ -6,7 +6,8 @@
     </div>
     {# TODO: handle manual quantity insertion into field #}
     <div class="col-md-4 product-quantity">
-        <input id="product_quantity_{{ product.id }}" type="text" class="form-control text-center" value="{{ product.getUserProducts[0].quantity }}">
+        <input id="product_quantity_{{ product.id }}" type="text" class="form-control text-center" onchange="changeQuantity({{ order.id }}, {{ product.id }});"
+               value="{% if product.getUserProducts[0] is defined %}{{ product.getUserProducts[0].quantity }}{% else %}0{% endif %}">
     </div>
     <div class="col-md-4">
         <a href="{{ product.link }}" target="_blank">View product</a>
