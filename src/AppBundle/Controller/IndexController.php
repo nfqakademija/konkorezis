@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-# TODO: will be used in a future
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class IndexController extends Controller

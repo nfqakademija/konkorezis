@@ -2,7 +2,8 @@
  * Created by mindaugas on 15.11.22.
  */
 $(document).ready(function() {
-$(".new-product-info").hide();
+    $(".new-product-info").hide();
+
     $(".btn-new-product").click(function(){
         var newProductForm = $(".new-product-form:first");
         var newClone = newProductForm.clone();
@@ -18,7 +19,7 @@ $(".new-product-info").hide();
         // Send products' creation request and display newly added
         // product (if addition is successful)
         var request = $.ajax({
-            url: "/orders/create_product",
+            url: "/product/create",
             method: "POST",
             data: {
                 order_id    : orderId,
@@ -37,7 +38,7 @@ $(".new-product-info").hide();
         });
 
         request.fail(function( jqXHR ) {
-            // TODO: alert about failed addition in better way
+            // TODO: alert about failed request in better way
             alert( "Adding new product failed: " + jqXHR.responseText);
         });
     });
@@ -46,3 +47,47 @@ $(".new-product-info").hide();
         event.preventDefault();
     });
 });
+
+function decreaseQuantity(oderId, productId) {
+    // Send products' decrease request and return changed quantity
+    var request = $.ajax({
+        url: "/product/decrease_quantity",
+        method: "POST",
+        data: {
+            order_id    : orderId,
+            product_id  : productId
+        },
+        dataType: "json"
+    });
+
+    request.done(function( response ) {
+        $("#product_quantity_" + productId).val(response);
+    });
+
+    request.fail(function( jqXHR ) {
+        // TODO: alert about failed request in better way
+        alert( "Decreasing products' counter failed: " + jqXHR.responseText);
+    });
+}
+
+function increaseQuantity(oderId, productId) {
+    // Send products' increase request and return changed quantity
+    var request = $.ajax({
+        url: "/product/increase_quantity",
+        method: "POST",
+        data: {
+            order_id    : orderId,
+            product_id  : productId
+        },
+        dataType: "json"
+    });
+
+    request.done(function( response ) {
+        $("#product_quantity_" + productId).val(response);
+    });
+
+    request.fail(function( jqXHR ) {
+        // TODO: alert about failed request in better way
+        alert( "Increasing products' counter failed: " + jqXHR.responseText);
+    });
+}
