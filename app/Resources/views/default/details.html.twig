@@ -25,10 +25,8 @@
         <script type="text/javascript">
             var orderId = {{ order.id }};
         </script>
-        {# FIXME: currently we are able to add product only once, second time doesn't call ajax... #}
         <div class="new-product-form">
             {{include('default/create_product.html.twig')}}
         </div>
     </div>
-    <button class="button btn btn-success btn-new-product">New product</button>
 {% endblock %}
