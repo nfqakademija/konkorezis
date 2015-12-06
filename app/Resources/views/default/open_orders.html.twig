@@ -4,22 +4,13 @@
     {{ include('default/navigation_bar.html.twig') }}
     <div class="container">
         {% for order in orders %}
-            <div class="col-sm-6 col-md-3 summary-container">
-                <div class="summary-content">
-                    <h2>{{ order.name }}</h2>
-                    <p>{{ order.description }}</p>
-                    <p><b>Buying at: </b>{{ order.eventDate|date("Y-m-d H:i") }}</p>
-                    <p><b>Delivery address: </b>{{ order.address }}</p>
-                    <div class="btn btn-default btn-group-justified"><a href="{{ path('orders_details', {'order_id': order.id}) }}">Details</a></div>
-                </div>
-            </div>
+            {{ include('default/order.html.twig') }}
         {% endfor %}
     </div>
-    {# TODO: hide "next" button on "empty" pages #}
     <div class="container text-center">
         <br>
         {% if page_number != 1%}<div class="btn btn-danger text-center"><a href="{{ path('orders_open', {'page_number': page_number-1, 'per_page' : per_page  }) }}">Previous page</a></div>{% endif %}
-        <div class="btn btn-success text-center"><a href="{{ path('orders_open', {'page_number': page_number+1, 'per_page' : per_page }) }}">Next page</a></div>
+        {% if orders|length > 0 %}<div class="btn btn-success text-center"><a href="{{ path('orders_open', {'page_number': page_number+1, 'per_page' : per_page }) }}">Next page</a></div>{% endif %}
         <br>
     </div>
 
