@@ -189,11 +189,36 @@ class OrdersController extends Controller
             return new RedirectResponse($this->generateUrl('user_history'));
         }
 
-        // TODO: render summary view
+        // Get time remaining to join order
+        $closing_after = Utilities::countTimeRemaining(
+            date_timestamp_get($order->getJoiningDeadline()));
 
+        $products = $order->getProducts();
 
+        $user_product_qty = array();
 
-        return $this->render('default/index.html.twig');
+        $order_sum = 0;
+
+        foreach($products as $pkey => $product){
+            $userProducts = $product->getUserProducts();
+
+            $qty_sum = 0;
+            foreach($userProducts as $up){
+                $qty_sum += $up->getQuantity();
+            }
+            $user_product_qty[$pkey] = array('qty' => $qty_sum, 'overall' => $qty_sum * $product->getPrice());
+            $order_sum += $user_product_qty[$pkey]['overall'];
+        }
+
+        $user_product_qty['order_sum'] = $order_sum;
+
+        return $this->render('default/summary.html.twig', array(
+            'products'          => $products,
+            'closing_after'     => $closing_after,
+            'order'             => $order,
+            'order_id'          => $order_id,
+            'user_product_qty'  => $user_product_qty
+        ));
     }
 
     /**
