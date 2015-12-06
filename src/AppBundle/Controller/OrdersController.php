@@ -114,13 +114,33 @@ class OrdersController extends Controller
         $closing_after = Utilities::countTimeRemaining(
             date_timestamp_get($order->getJoiningDeadline()));
 
+        $user = $this->getUser();
+
         $products = $order->getProducts();
+
+        $user_product_qty = array();
+
+        foreach($products as $pkey => $product){
+            $userProduct = $this->getDoctrine()
+                ->getRepository('AppBundle:UserProduct')
+                ->findOneBy(array(
+                    'user'      => $user,
+                    'product'   => $product
+                ));
+
+            if (!$userProduct) {
+                $user_product_qty[$pkey] = 0;
+            } else {
+                $user_product_qty[$pkey] = $userProduct->getQuantity();
+            }
+        }
 
         return $this->render('default/details.html.twig', array(
             'products'          => $products,
             'closing_after'     => $closing_after,
             'order'             => $order,
-            'order_id'          => $order_id
+            'order_id'          => $order_id,
+            'user_product_qty'  => $user_product_qty
         ));
     }
 
