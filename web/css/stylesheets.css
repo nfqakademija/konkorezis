@@ -4,13 +4,19 @@
 
 .summary-container{
     width: 50%;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 .summary-content{
      border: 1px dashed black;
      border-radius: 5%;
      padding: 0 10px 10px 10px;
      /*background-color: moccasin;*/
+}
+.summary-content-created{
+    border: 1px dashed black;
+    border-radius: 5%;
+    padding: 0 10px 10px 10px;
+    /*background-color: moccasin;*/
 }
 .product-info{
     border: 1px dashed black;
@@ -42,18 +48,26 @@
 }*/
 
 /* Orders items should be same size on large screens */
+/* Jurij: without it it looks better - while checking responsiveness - it looks ugly in some settings
 @media (min-width: 768px) {
     .summary-content{
         height: 260px;
-        /*background-color: moccasin;*/
     }
-    .summary-content h3 {
+    .summary-content-created{
+        height: 330px;
+    }
+    .summary-content h3, .summary-content-created h3 {
         height: 20%;
     }
-    .summary-content p:nth-of-type(1) {
+    .summary-content p:nth-of-type(1), .summary-content-created p:nth-of-type(1) {
         height: 15%;
     }
-    .summary-content p:nth-of-type(3) {
+    .summary-content p:nth-of-type(3), .summary-content-created p:nth-of-type(3){
         height: 15%;
     }
+}
+*/
+
+.btn-summary {
+    margin-top: 5px;
 }
