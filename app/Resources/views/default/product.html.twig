@@ -2,15 +2,15 @@
     <h1>{{ product.title }}</h1>
     <div class="col-md-4">
         Price: {{ product.price }} €
-        <button class="btn btn-default btn-group-justified" onclick="decreaseQuantity({{ order.id }}, {{ product.id }});"> - </button>
+        <button class="btn btn-default btn-group-justified" onclick="decreaseQuantity({{ order.id }}, {{ product.id }});"> <span class="glyphicon glyphicon-minus"></span> </button>
     </div>
     {# TODO: handle manual quantity insertion into field #}
     <div class="col-md-4 product-quantity">
         <input id="product_quantity_{{ product.id }}" type="text" class="form-control text-center" onchange="changeQuantity({{ order.id }}, {{ product.id }});"
-               value="{{ user_product_qty[loop.index0] }}">
+               value="{{ quantity }}">
     </div>
     <div class="col-md-4">
         <a href="{{ product.link }}" target="_blank">View product</a>
-        <button class="btn btn-default btn-group-justified" onclick="increaseQuantity({{ order.id }}, {{ product.id }});"> + </button>
+        <button class="btn btn-default btn-group-justified" onclick="increaseQuantity({{ order.id }}, {{ product.id }});"> <span class="glyphicon glyphicon-plus"></span> </button>
     </div>
 </div>
