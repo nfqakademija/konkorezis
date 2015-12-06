@@ -114,13 +114,33 @@ class OrdersController extends Controller
         $closing_after = Utilities::countTimeRemaining(
             date_timestamp_get($order->getJoiningDeadline()));
 
+        $user = $this->getUser();
+
         $products = $order->getProducts();
+
+        $user_product_qty = array();
+
+        foreach($products as $pkey => $product){
+            $userProduct = $this->getDoctrine()
+                ->getRepository('AppBundle:UserProduct')
+                ->findOneBy(array(
+                    'user'      => $user,
+                    'product'   => $product
+                ));
+
+            if (!$userProduct) {
+                $user_product_qty[$pkey] = 0;
+            } else {
+                $user_product_qty[$pkey] = $userProduct->getQuantity();
+            }
+        }
 
         return $this->render('default/details.html.twig', array(
             'products'          => $products,
             'closing_after'     => $closing_after,
             'order'             => $order,
-            'order_id'          => $order_id
+            'order_id'          => $order_id,
+            'user_product_qty'  => $user_product_qty
         ));
     }
 
@@ -139,7 +159,40 @@ class OrdersController extends Controller
     {
         // TODO: check whether user can view summary (is it users' order)
 
+        $user = $this->getUser();
+
+        // Retrieve orders' details information for a details page
+        $order = $this->getDoctrine()
+            ->getRepository('AppBundle:Orders')
+            ->find($order_id);
+
+        if (!$order) {
+            // Create flash message for no order found
+            $this->addFlash(
+                'error',
+                'No order found for id: ' . $order_id . '!'
+            );
+
+            // Redirect to orders_open screen
+            return new RedirectResponse($this->generateUrl('user_history'));
+        }
+
+        if($order->getUserId() !== $user->getId()){
+            //throw $this->createAccessDeniedException();
+            // Create flash message if user not order creator
+            $this->addFlash(
+                'error',
+                'You are not creator of order: ' . $order_id . '!'
+            );
+
+            // Redirect to user_history screen
+            return new RedirectResponse($this->generateUrl('user_history'));
+        }
+
         // TODO: render summary view
+
+
+
         return $this->render('default/index.html.twig');
     }
 
