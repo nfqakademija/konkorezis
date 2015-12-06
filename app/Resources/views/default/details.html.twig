@@ -18,7 +18,7 @@
             <div class="col-md-4"><b>Delivery address: </b>{{ order.address }}</div>
         </div>
         {% for product in products %}
-            {{ include('default/product.html.twig') }}
+            {{ include('default/product.html.twig',{'quantity': user_product_qty[loop.index0]}) }}
         {% endfor %}
     </div>
     <div class="new-product-box col-md-12">
