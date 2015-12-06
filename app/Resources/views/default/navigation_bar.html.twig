@@ -12,5 +12,10 @@
                     </ul>
             </div>
         </nav>
+        {% for flash_message in app.session.flashbag.get('notice') %}
+            <div class="alert alert-info">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
     </div>
 </div>

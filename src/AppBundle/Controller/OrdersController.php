@@ -205,7 +205,40 @@ class OrdersController extends Controller
     {
         // TODO: check whether user can view summary (is it users' order)
 
+        $user = $this->getUser();
+
+        // Retrieve orders' details information for a details page
+        $order = $this->getDoctrine()
+            ->getRepository('AppBundle:Orders')
+            ->find($order_id);
+
+        if (!$order) {
+            // Create flash message for no order found
+            $this->addFlash(
+                'error',
+                'No order found for id: ' . $order_id . '!'
+            );
+
+            // Redirect to orders_open screen
+            return new RedirectResponse($this->generateUrl('user_history'));
+        }
+
+        if($order->getUserId() !== $user->getId()){
+            //throw $this->createAccessDeniedException();
+            // Create flash message if user not order creator
+            $this->addFlash(
+                'error',
+                'You are not creator of order: ' . $order_id . '!'
+            );
+
+            // Redirect to user_history screen
+            return new RedirectResponse($this->generateUrl('user_history'));
+        }
+
         // TODO: render summary view
+
+
+
         return $this->render('default/index.html.twig');
     }
 
