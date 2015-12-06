@@ -286,6 +286,11 @@ class ProductController extends Controller
                             } else {
                                 $userProduct->setQuantity($quantity);
                             }
+
+                            if ($quantity == 0) {
+                                $em->remove($userProduct);
+                            }
+
                             $em->flush();
 
                             return new Response($quantity, Response::HTTP_OK);

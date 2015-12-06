@@ -9,10 +9,11 @@
         {% for order in created_orders %}
             <div class="col-sm-6 col-md-3 summary-container">
                 <div class="summary-content">
-                    <h2>{{ order.name }}</h2>
-                    <p>{{ order.description }}</p>
+                    <h2>{{ order.name|length > 36 ? order.name|slice(0, 36) ~ '...' : order.name }}
+                    </h2>
+                    <p>{{ order.description|length > 62 ? order.description|slice(0, 62) ~ '...' : order.description }}</p>
                     <p><b>Buying at: </b>{{ order.eventDate|date("Y-m-d H:i") }}</p>
-                    <p><b>Delivery address: </b>{{ order.address }}</p>
+                    <p><b>Delivery address: </b>{{ order.address|length > 45 ? order.address|slice(0, 45) ~ '...' : order.address }}</p>
                     <div class="btn btn-default btn-group-justified"><a href="{{ path('orders_details', {'order_id': order.id }) }}">Details</a></div>
                     <div class="btn btn-default btn-group-justified"><a href="{{ path('orders_summary', {'order_id': order.id }) }}">Summary</a></div>
                 </div>
@@ -23,22 +24,14 @@
         {# TODO: show different view users' joined orders#}
         <h2>Joined orders</h2>
         {% for order in joined_orders %}
-            <div class="col-sm-6 col-md-3 summary-container">
-                <div class="summary-content">
-                    <h2>{{ order.name }}</h2>
-                    <p>{{ order.description }}</p>
-                    <p><b>Buying at: </b>{{ order.eventDate|date("Y-m-d H:i:s") }}</p>
-                    <p><b>Delivery address: </b>{{ order.address }}</p>
-                    <div class="btn btn-default btn-group-justified"><a href="{{ path('orders_details', {'order_id': order.id }) }}">Details</a></div>
-                </div>
-            </div>
+            {{ include('default/order.html.twig') }}
         {% endfor %}
     </div>
     {# TODO: hide "next" button on "empty" pages #}
     <div class="container text-center">
         <br>
         {% if page_number != 1%}<div class="btn btn-danger text-center"><a href="{{ path('orders_open', {'page_number': page_number-1, 'per_page' : per_page  }) }}">Previous page</a></div>{% endif %}
-        <div class="btn btn-success text-center"><a href="{{ path('orders_open', {'page_number': page_number+1, 'per_page' : per_page }) }}">Next page</a></div>
+        {#<div class="btn btn-success text-center"><a href="{{ path('orders_open', {'page_number': page_number+1, 'per_page' : per_page }) }}">Next page</a></div>#}
         <br>
     </div>
 
