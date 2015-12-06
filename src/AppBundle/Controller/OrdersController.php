@@ -2,10 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\AjaxResponses;
 use AppBundle\Entity\Orders;
-use AppBundle\Entity\Product;
-use AppBundle\Entity\UserProduct;
 use AppBundle\Utilities;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -84,69 +81,6 @@ class OrdersController extends Controller
         }
 
         return $this->render('default/create_order.html.twig');
-    }
-
-    /** TODO: add parameters requirements, post type
-     * @Route(
-     *     "/orders/create_product",
-     *     name="orders_create_product"
-     * )
-     * @Method("POST")
-     */
-    public function createProductAction()
-    {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return new Response(AjaxResponses::$UNAUTHORIZED, Response::HTTP_UNAUTHORIZED);
-        }
-
-        $request = Request::createFromGlobals();
-        $order_id = intval($request->request->get('order_id', 0));
-
-        if ($order_id > 0) {
-            // Check whether order with such ID exist
-            $order = $this->getDoctrine()
-                ->getRepository('AppBundle:Orders')
-                ->find($order_id);
-
-            if (!$order) {
-                return new Response(AjaxResponses::$ORDER_NOT_FOUND, Response::HTTP_NOT_FOUND);
-            }
-
-            $title = strval($request->request->get('title'));
-            $price = floatval($request->request->get('price'));
-            $link = strval($request->request->get('link'));
-            $quantity = intval($request->request->get('quantity'));
-            $user = $this->getUser();
-
-            if ($price <= 0 || $quantity <= 0) {
-                return new Response(AjaxResponses::$WRONG_REQUEST_PARAMETERS, Response::HTTP_BAD_REQUEST);
-            }
-
-            $product = new Product();
-            $product->setTitle($title);
-            $product->setPrice($price);
-            $product->setLink($link);
-            $product->setOrders($order);
-
-            $userProduct = new UserProduct();
-            $userProduct->setProduct($product);
-            $userProduct->setQuantity($quantity);
-            $userProduct->setUser($user);
-            $product->addUserProduct($userProduct);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($userProduct);
-            $em->persist($product);
-            $em->flush();
-
-
-            return $this->render('default/product.html.twig', array(
-                'product'       => $product,
-                'quantity'      => $quantity
-            ));
-        } else {
-            return new Response(AjaxResponses::$WRONG_REQUEST_PARAMETERS, Response::HTTP_BAD_REQUEST);
-        }
     }
 
     /**
