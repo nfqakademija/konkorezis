@@ -3,9 +3,22 @@
 {% block body %}
 <div class="container">
        <div class="col-md-8 welcome">
-              <img class="logo" src="http://www.synesisitltd.com/images/call_centre.gif"/>
-              <h1>Welcome to our site!</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.</p>
+              <img class="logo" src="{{ asset('img/logo_large.png') }}"/>
+              <h1>Konkorezis&trade; - lightweight solution for collaborative food shopping lists!</h1>
+              <br>
+              <p>Get your parties' snacks list in a breeze:</p>
+              <ul>
+                  <li>
+                      Fast creation of an open order. Share it to friends via URL!
+                  </li>
+                  <li>
+                      Don't see your dish in list? Shortly describe your desired products and add it.
+                  </li>
+                  <li>
+                      Your product is already in a list? Great! Just tap "+" / "-" to change its amount.
+                  </li>
+              </ul>
+              <p>That's it! Register and start using Konkorezis&trade;!</p>
               <hr/>
        </div>
        <div class="col-md-4 widget">
@@ -28,18 +41,14 @@
                      <input type="hidden" name="dashboard" value="/account" />
               </form>
               #}
-              {# TODO: fix URLs #}
-              <a href="login" style="font-size: 30px;">Login</a><br><br><br>
-              <a href="register" style="font-size: 18px;">Dont have an account? Register here.</a>
+              <a href="{{  path('fos_user_security_login') }}" style="font-size: 30px;">Login</a><br><br><br>
+              <a href="{{  path('fos_user_registration_register') }}" style="font-size: 18px;">Dont have an account? Register here.</a>
        </div>
 </div>
 
 {% endblock %}
 {% block stylesheets %}
 <style>
-.widget{
-       margin-top:150px;
-}
 .logo{
        height:200px;
        width:200px;
