@@ -3,7 +3,6 @@
 {% block body %}
     {{ include('default/navigation_bar.html.twig') }}
     <div class="container">
-        {# TODO: show different view for users' created orders#}
         <h2>Created orders</h2>
         {% for order in created_orders %}
             <div class="col-xs-12 col-sm-6 col-md-3 summary-container">
@@ -21,7 +20,6 @@
         {% endfor %}
     </div>
     <div class="container">
-        {# TODO: show different view users' joined orders#}
         <h2>Joined orders</h2>
         {% for order in joined_orders %}
             {{ include('default/order.html.twig') }}
