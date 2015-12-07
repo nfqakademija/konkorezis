@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Orders;
+use AppBundle\Entity\Product;
 use AppBundle\Utilities;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -52,6 +53,7 @@ class OrdersController extends Controller
         $request = Request::createFromGlobals();
 
         if($request->isMethod('POST')){
+            // TODO: validate form data
             $order = new Orders();
             $user = $this->getUser();
             $order_name = $request->request->get('order_name');
@@ -75,6 +77,11 @@ class OrdersController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($order);
             $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Order successfully created!'
+            );
 
             return new RedirectResponse($this->generateUrl('orders_details',array('order_id' => $order->getId())));
 
@@ -157,7 +164,6 @@ class OrdersController extends Controller
      */
     public function summaryAction($order_id)
     {
-
         $user = $this->getUser();
 
         // Retrieve orders' details information for a details page
@@ -317,9 +323,71 @@ class OrdersController extends Controller
      */
     public function deleteAction($order_id)
     {
-        // TODO: check whether user can delete order (is it users' order)
+        $user = $this->getUser();
 
-        // TODO: remove users' order
+        // Retrieve orders' details information for a details page
+        $order = $this->getDoctrine()
+            ->getRepository('AppBundle:Orders')
+            ->find($order_id);
+
+        if (!$order) {
+            // Create flash message for no order found
+            $this->addFlash(
+                'error',
+                'No order found for id: ' . $order_id . '!'
+            );
+
+            // Redirect to orders_open screen
+            return new RedirectResponse($this->generateUrl('user_history'));
+        }
+
+        if($order->getUserId() !== $user->getId()){
+            //throw $this->createAccessDeniedException();
+            // Create flash message if user not order creator
+            $this->addFlash(
+                'error',
+                'You are not creator of order: ' . $order_id . '!'
+            );
+
+            // Redirect to user_history screen
+            return new RedirectResponse($this->generateUrl('user_history'));
+        }
+
+        // Get time remaining to join order
+        $closing_after = Utilities::countTimeRemaining(
+            date_timestamp_get($order->getJoiningDeadline()));
+
+        if ($closing_after == Utilities::$STATUS_JOINING_TIME_IS_OVER) {
+            $this->addFlash(
+                'error',
+                'You cannot remove orders from the past. Remove is allowed for open orders!'
+            );
+
+            // Redirect to user_history screen
+            return new RedirectResponse($this->generateUrl('user_history'));
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($order);
+
+//        $order = new Orders();
+//        $products = new Product();
+        $products = $order->getProducts();
+
+        if ($products) {
+            foreach ($products as $product) {
+                $em->remove($product);
+
+                $userProducts = $product->getUserProducts();
+                foreach ($userProducts as $userProduct) {
+                    $em->remove($userProduct);
+                }
+            }
+
+
+        }
+
+        $em->flush();
 
         // Create flash message for successful removal
         $this->addFlash(
@@ -328,7 +396,7 @@ class OrdersController extends Controller
         );
 
         // Redirect to users_orders screen to refresh list
-        return new RedirectResponse($this->generateUrl('orders_open'));
+        return new RedirectResponse($this->generateUrl('user_history'));
     }
 
 

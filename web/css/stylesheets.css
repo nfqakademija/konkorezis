@@ -40,6 +40,20 @@
 .widget{
     margin-top:150px;
 }
+.flash {
+    border-radius: 5px;
+    padding: 0 5px;
+    color: white;
+}
+.flash-notice {
+    background-color: #ff8800;
+}
+.flash-error {
+    background-color: orangered;
+}
+.flashes_container {
+    margin-left: 30px;
+}
 /*
 .form-new-product{
     margin-top:20px;
@@ -51,14 +65,12 @@
 }*/
 
 /* Orders items should be same size on large screens */
-/* Jurij: without it it looks better - while checking responsiveness - it looks ugly in some settings
-@media (min-width: 768px) {
+@media (min-width: 970px) {
     .summary-content{
         height: 260px;
     }
-    .summary-content-created{
-        height: 330px;
-    }
+}
+@media (min-width: 767px) {
     .summary-content h3, .summary-content-created h3 {
         height: 20%;
     }
@@ -69,8 +81,17 @@
         height: 15%;
     }
 }
-*/
+@media (min-width: 969px) and (max-width: 1170px) {
+    .summary-content, .summary-content-created h3 {
+        height: 330px;
+    }
 
+}
+@media (min-width: 468px) and (max-width: 767px) {
+    .summary-content{
+        height: auto;
+    }
+}
 .btn-summary {
     margin-top: 5px;
 }

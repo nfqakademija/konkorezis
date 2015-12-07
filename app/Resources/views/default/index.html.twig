@@ -1,46 +1,36 @@
-{# TODO: react to flash notifications #}
 {% extends 'base.html.twig' %}
 {% block body %}
-<div class="container">
+    <div class="container">
        <div class="col-md-8 welcome">
-              <img class="logo" src="{{ asset('img/logo_large.png') }}"/>
-              <h1>Konkorezis&trade; - lightweight solution for collaborative food shopping lists!</h1>
-              <br>
-              <p>Get your parties' snacks list in a breeze:</p>
-              <ul>
-                  <li>
-                      Fast creation of an open order. Share it to friends via URL!
-                  </li>
-                  <li>
-                      Don't see your dish in list? Shortly describe your desired products and add it.
-                  </li>
-                  <li>
-                      Your product is already in a list? Great! Just tap "+" / "-" to change its amount.
-                  </li>
-              </ul>
-              <p>That's it! Register and start using Konkorezis&trade;!</p>
-              <hr/>
+           {% for flash_message in app.session.flashbag.get('notice') %}
+               <div class="flash flash-notice">
+                   {{ flash_message }}
+               </div>
+           {% endfor %}
+           {% for flash_message in app.session.flashbag.get('error') %}
+               <div class="flash flash-error">
+                   {{ flash_message }}
+               </div>
+           {% endfor %}
+          <img class="logo" src="{{ asset('img/logo_large.png') }}"/>
+          <h1>Konkorezis&trade; - lightweight solution for collaborative food shopping lists!</h1>
+          <br>
+          <p>Get your parties' snacks list in a breeze:</p>
+          <ul>
+              <li>
+                  Fast creation of an open order. Share it to friends via URL!
+              </li>
+              <li>
+                  Don't see your dish in list? Shortly describe your desired products and add it.
+              </li>
+              <li>
+                  Your product is already in a list? Great! Just tap "+" / "-" to change its amount.
+              </li>
+          </ul>
+          <p>That's it! Register and start using Konkorezis&trade;!</p>
+          <hr/>
        </div>
        <div class="col-md-4 widget">
-              {#
-              <form>
-                     <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
-                     </div>
-                     <div class="form-group">
-                            <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                     </div>
-                     <div class="checkbox">
-                            <label>
-                                   <input type="checkbox"> Remember me
-                            </label>
-                     </div>
-                     <button type="submit" class="btn btn-default">Login</button>
-                     <input type="hidden" name="dashboard" value="/account" />
-              </form>
-              #}
               <a href="{{  path('fos_user_security_login') }}" style="font-size: 30px;">Login</a><br><br><br>
               <a href="{{  path('fos_user_registration_register') }}" style="font-size: 18px;">Dont have an account? Register here.</a>
        </div>
@@ -56,6 +46,5 @@
 .welcome{
        margin-top:100px;
 }
-
 </style>
 {% endblock %}
