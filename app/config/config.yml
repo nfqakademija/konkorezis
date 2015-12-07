@@ -53,7 +53,7 @@ assetic:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   "%database_driver%"
+        driver:   pdo_mysql
         host:     "%database_host%"
         dbname:   "%database_name%"
         user:     "%database_user%"
