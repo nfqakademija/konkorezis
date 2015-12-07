@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="col-sm-3 col-md-2"><img class="logo" src="{{ asset('img/logo.png') }}"/></div>
+    <div class="col-sm-3 col-md-2"><a href="{{ path('orders_open') }}"><img class="logo" src="{{ asset('img/logo.png') }}"/></a></div>
     <div class="col-sm-9 col-md-10">
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -11,10 +11,17 @@
                     </ul>
             </div>
         </nav>
-        {% for flash_message in app.session.flashbag.get('notice') %}
-            <div class="alert alert-info">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
     </div>
+</div>
+<div class="flashes_container">
+    {% for flash_message in app.session.flashbag.get('notice') %}
+        <div class="flash flash-notice">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashbag.get('error') %}
+        <div class="flash flash-error">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
 </div>

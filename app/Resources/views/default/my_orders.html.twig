@@ -15,6 +15,7 @@
                     <a class="btn btn-default btn-group-justified" href="{{ path('orders_details', {'order_id': order.id }) }}">Details</a>
                     <a class="btn btn-default btn-group-justified btn-summary" href="{{ path('orders_summary', {'order_id': order.id }) }}">Summary</a>
                     <a class="btn btn-default btn-group-justified btn-summary" href="{{ path('orders_account', {'order_id': order.id }) }}">Account</a>
+                    <a class="btn btn-default btn-group-justified btn-summary" href="{{ path('order_delete', {'order_id': order.id }) }}">Delete</a>
                 </div>
             </div>
         {% endfor %}
