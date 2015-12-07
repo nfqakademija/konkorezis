@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {{ include('default/navigation_bar.html.twig') }}
+    <div id="order_details" class="text-center">
+        <div class="col-md-12">
+            <h1>{{ order.name }}</h1>
+            <div class="col-md-6"><h4>{{ order.supplierName }}</h4></div>
+            <div class="col-md-6"> <h4><a href="{{ order.supplierMenuLink }}" target="_blank">View menu</a></h4></div>
+            <div class="col-md-12">{{ order.description }}</div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-6"><b>Buying time: </b>{{ order.eventDate|date("Y-m-d H:i") }}</div>
+            <div class="col-md-6"><b>Delivery address: </b>{{ order.address }}</div>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>User</th>
+            <th>Products</th>
+            <th>Overall</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key, participant in participants %}
+            {% if key is same as ('order_sum') %}
+            {% else %}
+                <tr>
+                <td>{{ participant['email'] }}</td>
+                <td>
+                    <table class="table">
+                        {% for pkey, product in participant %}
+                            {% if pkey is same as ('email') or pkey is same as ('overall_sum') %}
+                            {% else %}
+                                <tr><td>{{ product['product'] }}</td><td>{{ product['price'] }}</td><td>{{ product['qty'] }}</td><td>{{ product['overall'] }}</td></tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </td>
+                <td>{{ participant['overall_sum'] }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        <tr><td></td><td style="text-align: right;"><b>Overall sum:</b></td><td>{{ participants['order_sum'] }}</td></tr>
+        </tbody>
+    </table>
+{% endblock %}

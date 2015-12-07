@@ -157,7 +157,6 @@ class OrdersController extends Controller
      */
     public function summaryAction($order_id)
     {
-        // TODO: check whether user can view summary (is it users' order)
 
         $user = $this->getUser();
 
@@ -219,6 +218,92 @@ class OrdersController extends Controller
             'order_id'          => $order_id,
             'user_product_qty'  => $user_product_qty
         ));
+    }
+
+    /**
+     * Shown for host only
+     *
+     * @Route(
+     *     "/orders/account/{order_id}",
+     *     name="orders_account",
+     *     requirements={
+     *          "order_id":     "\d+",
+     *     }
+     * )
+     */
+    public function accountAction($order_id)
+    {
+        $user = $this->getUser();
+
+        // Retrieve orders' details information for a details page
+        $order = $this->getDoctrine()
+            ->getRepository('AppBundle:Orders')
+            ->find($order_id);
+
+        if (!$order) {
+            // Create flash message for no order found
+            $this->addFlash(
+                'error',
+                'No order found for id: ' . $order_id . '!'
+            );
+
+            // Redirect to orders_open screen
+            return new RedirectResponse($this->generateUrl('user_history'));
+        }
+
+        if($order->getUserId() !== $user->getId()){
+            //throw $this->createAccessDeniedException();
+            // Create flash message if user not order creator
+            $this->addFlash(
+                'error',
+                'You are not creator of order: ' . $order_id . '!'
+            );
+
+            // Redirect to user_history screen
+            return new RedirectResponse($this->generateUrl('user_history'));
+        }
+
+        $products = $order->getProducts();
+
+        $participants = array();
+        $participants['order_sum'] = 0;
+
+        foreach($products as $pkey => $product){
+            $userProducts = $product->getUserProducts();
+
+            foreach($userProducts as $up){
+                $participant = $up->getUser();
+                if(isset($participants[$participant->getId()])){
+                    $participants[$participant->getId()][] = array(
+                        'product' => $product->getTitle(),
+                        'price' => $product->getPrice(),
+                        'qty' => $up->getQuantity(),
+                        'overall' => $product->getPrice()*$up->getQuantity()
+                    );
+                    $participants[$participant->getId()]['overall_sum'] += $product->getPrice()*$up->getQuantity();
+                    $participants['order_sum'] += $product->getPrice()*$up->getQuantity();
+                } else {
+                    $participants[$participant->getId()] =
+                        array(array(
+                            'product' => $product->getTitle(),
+                            'price' => $product->getPrice(),
+                            'qty' => $up->getQuantity(),
+                            'overall' => $product->getPrice()*$up->getQuantity()
+                        ));
+                    $participants[$participant->getId()]['email'] = $participant->getEmail();
+                    $participants[$participant->getId()]['overall_sum'] = $participants[$participant->getId()][0]['overall'];
+                    $participants['order_sum'] += $participants[$participant->getId()][0]['overall'];
+                }
+            }
+        }
+
+        return $this->render('default/account.html.twig', array(
+            'products'          => $products,
+            'order'             => $order,
+            'order_id'          => $order_id,
+            'participants'      => $participants
+        ));
+
     }
 
     /**
