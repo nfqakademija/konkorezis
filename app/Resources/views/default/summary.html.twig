@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {{ include('default/navigation_bar.html.twig') }}
+    <div id="order_details" class="text-center">
+        <div class="col-md-12">
+            <h1>{{ order.name }}</h1>
+            <div class="col-md-6"><h4>{{ order.supplierName }}</h4></div>
+            <div class="col-md-6"> <h4><a href="{{ order.supplierMenuLink }}" target="_blank">View menu</a></h4></div>
+            <div class="col-md-12">{{ order.description }}</div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-4"><b>Buying time: </b>{{ order.eventDate|date("Y-m-d H:i") }}</div>
+            <div class="col-md-4"><b>Closing after: </b>{{ closing_after }}</div>
+            <div class="col-md-4"><b>Delivery address: </b>{{ order.address }}</div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Link</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Overall</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}<tr>
+            <td>{{ product.title }}</td>
+            <td><a href="{{ product.link }}" target="_blank">View product</a></td>
+            <td>{{ product.price }}</td>
+            <td>{{ user_product_qty[loop.index0]['qty'] }}</td>
+            <td>{{ user_product_qty[loop.index0]['overall'] }}</td>
+            </tr>
+        {% endfor %}
+            <tr><td></td><td></td><td></td><td style="text-align: right;"><b>Overall sum:</b></td><td>{{ user_product_qty['order_sum'] }}</td></tr>
+        </tbody>
+    </table>
+
+{% endblock %}

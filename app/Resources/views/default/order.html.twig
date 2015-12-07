@@ -1,9 +1,9 @@
-<div class="col-xs-8 col-sm-6 col-md-3 summary-container">
+<div class="col-xs-12 col-sm-6 col-md-3 summary-container">
     <div class="summary-content">
         <h3>{{ order.name|length > 36 ? order.name|slice(0, 36) ~ '...' : order.name }}</h3>
         <p>{{ order.description|length > 62 ? order.description|slice(0, 62) ~ '...' : order.description }}</p>
         <p><b>Buying at: </b>{{ order.eventDate|date("Y-m-d H:i") }}</p>
         <p><b>Delivery address: </b>{{ order.address|length > 45 ? order.address|slice(0, 45) ~ '...' : order.address }}</p>
-        <div class="btn btn-default btn-group-justified"><a href="{{ path('orders_details', {'order_id': order.id}) }}">Details</a></div>
+        <a class="btn btn-default btn-group-justified" href="{{ path('orders_details', {'order_id': order.id}) }}">Details</a>
     </div>
 </div>
