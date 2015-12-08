@@ -187,7 +187,7 @@ class OrdersController extends Controller
             // Create flash message if user not order creator
             $this->addFlash(
                 'error',
-                'You are not creator of order: ' . $order_id . '!'
+                'You are not creator of order: ' . $order->getName() . '!'
             );
 
             // Redirect to user_history screen
@@ -262,7 +262,7 @@ class OrdersController extends Controller
             // Create flash message if user not order creator
             $this->addFlash(
                 'error',
-                'You are not creator of order: ' . $order_id . '!'
+                'You are not creator of order: ' . $order->getName() . '!'
             );
 
             // Redirect to user_history screen
@@ -346,7 +346,7 @@ class OrdersController extends Controller
             // Create flash message if user not order creator
             $this->addFlash(
                 'error',
-                'You are not creator of order: ' . $order_id . '!'
+                'You are not creator of order: ' . $order->getName() . '!'
             );
 
             // Redirect to user_history screen
