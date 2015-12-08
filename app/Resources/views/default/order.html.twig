@@ -4,6 +4,6 @@
         <p>{{ order.description|length > 62 ? order.description|slice(0, 62) ~ '...' : order.description }}</p>
         <p><b>Buying at: </b>{{ order.eventDate|date("Y-m-d H:i") }}</p>
         <p><b>Delivery address: </b>{{ order.address|length > 45 ? order.address|slice(0, 45) ~ '...' : order.address }}</p>
-        <a class="btn btn-default btn-group-justified" href="{{ path('orders_details', {'order_id': order.id}) }}">Details</a>
+        <a class="btn btn-default btn-group-justified" data-toggle="tooltip" title="View order details and products you ordered" href="{{ path('orders_details', {'order_id': order.id}) }}">Details</a>
     </div>
 </div>

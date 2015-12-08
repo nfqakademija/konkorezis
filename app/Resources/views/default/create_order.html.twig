@@ -2,58 +2,55 @@
 {% block body %}
     {{ include('default/navigation_bar.html.twig') }}
     <div class="container">
-
         <form class="form-horizontal" method="post" action="{{ path('orders_create') }}">
             <fieldset>
-
                 <legend class="text-center">Create your order</legend>
-
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textinput">Order title *</label>
                     <div class="col-md-5">
-                        <input id="order_name" name="order_name" placeholder="Order name" class="form-control input-md" required="" type="text">
+                        <input id="order_name" name="order_name" placeholder="Order name" class="form-control input-md" required="" type="text" value="{{ order_name is defined ? order_name : '' }}">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textinput">Supplier *</label>
                     <div class="col-md-5">
-                        <input id="supplier_name" name="supplier_name" placeholder="Supplier name" class="form-control input-md" required="" type="text">
+                        <input id="supplier_name" name="supplier_name" placeholder="Supplier name" class="form-control input-md" required="" type="text" value="{{ supplier_name is defined ? supplier_name : '' }}">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textinput">Supplier link</label>
                     <div class="col-md-5">
-                        <input id="supplier_link" name="supplier_link" placeholder="http://www.cilipica.lt" class="form-control input-md" type="text">
+                        <input id="supplier_link" name="supplier_link" placeholder="http://www.cilipica.lt" class="form-control input-md" type="text" value="{{ supplier_link is defined ? supplier_link : '' }}">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textarea">Description *</label>
                     <div class="col-md-4">
-                        <textarea class="form-control" id="description" name="description" placeholder="Add your order description"></textarea>
+                        <textarea class="form-control" id="description" name="description" placeholder="Add your order description">{{ description is defined ? description : '' }}</textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="button1id">Order date and time *</label>
                     <div class="col-md-5">
-                        <input id="order_date_time" name="order_date_time" placeholder="2015-12-17 19:00" class="form-control input-md" required="" type="text">
+                        <input id="order_date_time" name="order_date_time" placeholder="2015-12-17 19:00" class="form-control input-md" required="" type="text" value="{{ order_date_time is defined ? order_date_time : '' }}">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="button1id">Joining date and time *</label>
                     <div class="col-md-5">
-                        <input id="joining_date_time" name="joining_date_time" placeholder="2015-12-17 17:00" class="form-control input-md" required="" type="text">
+                        <input id="joining_date_time" name="joining_date_time" placeholder="2015-12-17 17:00" class="form-control input-md" required="" type="text" value="{{ joining_date_time is defined ? joining_date_time : '' }}">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="textinput">Address *</label>
                     <div class="col-md-5">
-                        <input id="event_address" name="event_address" placeholder="e.g. Didlaukio 59." class="form-control input-md" required="" type="text">
+                        <input id="event_address" name="event_address" placeholder="e.g. Didlaukio 59." class="form-control input-md" required="" type="text" value="{{ event_address is defined ? event_address : '' }}">
                     </div>
                 </div>
 
@@ -63,7 +60,6 @@
                         <button id="singlebutton" name="singlebutton" class="btn btn-default">Create Order</button>
                     </div>
                 </div>
-
             </fieldset>
         </form>
     </div>

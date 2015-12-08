@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Orders;
 use AppBundle\Entity\Product;
 use AppBundle\Utilities;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -53,41 +54,100 @@ class OrdersController extends Controller
         $request = Request::createFromGlobals();
 
         if($request->isMethod('POST')){
-            // TODO: validate form data
+            $errors = false;
+            $date_time_now = new DateTime();
+
             $order = new Orders();
             $user = $this->getUser();
-            $order_name = $request->request->get('order_name');
-            $supplier_name = $request->request->get('supplier_name');
-            $supplier_link = $request->request->get('supplier_link');
-            $description = $request->request->get('description');
-            $order_date_time = $request->request->get('order_date_time');
-            $joining_date_time = $request->request->get('joining_date_time');
-            $event_address = $request->request->get('event_address');
+            $order_name = strval($request->request->get('order_name'));
+            $supplier_name = strval($request->request->get('supplier_name'));
+            $supplier_link = strval($request->request->get('supplier_link'));
+            $description = strval($request->request->get('description'));
+            $event_address = strval($request->request->get('event_address'));
 
-            $order->setUser($user);
+            if ($order_name == '' || $supplier_name == '' || $description == '' || $event_address == '') {
+                $this->addFlash(
+                    'error',
+                    'Please do not leave empty fields!'
+                );
+                $errors = true;
+            }
 
-            $order->setName($order_name);
-            $order->setSupplierName($supplier_name);
-            $order->setSupplierMenuLink($supplier_link);
-            $order->setDescription($description);
-            $order->setAddress($event_address);
-            $order->setEventDate(date_create($order_date_time));
-            $order->setJoiningDeadline(date_create($joining_date_time));
+            $order_date_time = strval($request->request->get('order_date_time'));
+            // Check if string is some sort of time
+            if (strtotime($order_date_time)) {
+                $order_date_time = new DateTime($order_date_time);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($order);
-            $em->flush();
+                if ($order_date_time->format("Y-m-d H:i") <= $date_time_now->format("Y-m-d H:i")) {
+                    $this->addFlash(
+                        'error',
+                        'Wrong order date and time! It must be set to a future.'
+                    );
+                    $errors = true;
+                }
+            } else {
+                $this->addFlash(
+                    'error',
+                    'Wrong order date and time!'
+                );
+                $errors = true;
+            }
 
-            $this->addFlash(
-                'notice',
-                'Order successfully created!'
-            );
+            $joining_date_time = strval($request->request->get('joining_date_time'));
+            // Check if string is some sort of time
+            if (strtotime($joining_date_time)) {
+                $joining_date_time = new DateTime($joining_date_time);
 
-            return new RedirectResponse($this->generateUrl('orders_details',array('order_id' => $order->getId())));
+                if ($joining_date_time->format("Y-m-d H:i") <= $date_time_now->format("Y-m-d H:i")) {
+                    $this->addFlash(
+                        'error',
+                        'Wrong joining date and time! It must be set to a future.'
+                    );
+                    $errors = true;
+                }
+            } else {
+                $this->addFlash(
+                    'error',
+                    'Wrong joining date and time!'
+                );
+                $errors = true;
+            }
 
+            if (!$errors) {
+                $order->setUser($user);
+
+                $order->setName($order_name);
+                $order->setSupplierName($supplier_name);
+                $order->setSupplierMenuLink($supplier_link);
+                $order->setDescription($description);
+                $order->setAddress($event_address);
+                $order->setEventDate($order_date_time);
+                $order->setJoiningDeadline($joining_date_time);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($order);
+                $em->flush();
+
+                $this->addFlash(
+                    'notice',
+                    'Order successfully created!'
+                );
+
+                return new RedirectResponse($this->generateUrl('orders_details',array('order_id' => $order->getId())));
+            }
+
+            return $this->render('default/create_order.html.twig', array(
+                'order_name'        => $order_name,
+                'supplier_name'     => $supplier_name,
+                'supplier_link'     => $supplier_link,
+                'description'       => $description,
+                'event_address'     => $event_address,
+                'order_date_time'   => strval($request->request->get('order_date_time')),
+                'joining_date_time' => strval($request->request->get('joining_date_time'))
+            ));
+        } else {
+            return $this->render('default/create_order.html.twig');
         }
-
-        return $this->render('default/create_order.html.twig');
     }
 
     /**

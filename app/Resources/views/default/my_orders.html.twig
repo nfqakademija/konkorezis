@@ -12,10 +12,10 @@
                     <p>{{ order.description|length > 62 ? order.description|slice(0, 62) ~ '...' : order.description }}</p>
                     <p><b>Buying at: </b>{{ order.eventDate|date("Y-m-d H:i") }}</p>
                     <p><b>Delivery address: </b>{{ order.address|length > 45 ? order.address|slice(0, 45) ~ '...' : order.address }}</p>
-                    <a class="btn btn-default btn-group-justified" href="{{ path('orders_details', {'order_id': order.id }) }}">Details</a>
-                    <a class="btn btn-default btn-group-justified btn-summary" href="{{ path('orders_summary', {'order_id': order.id }) }}">Summary</a>
-                    <a class="btn btn-default btn-group-justified btn-summary" href="{{ path('orders_account', {'order_id': order.id }) }}">Account</a>
-                    <a class="btn btn-default btn-group-justified btn-summary" href="{{ path('order_delete', {'order_id': order.id }) }}">Delete</a>
+                    <a class="btn btn-default btn-group-justified" data-toggle="tooltip" title="View order details" href="{{ path('orders_details', {'order_id': order.id }) }}">Details</a>
+                    <a class="btn btn-default btn-group-justified btn-summary" data-toggle="tooltip" title="View all ordered products, required for you to buy" href="{{ path('orders_summary', {'order_id': order.id }) }}">Ordered products</a>
+                    <a class="btn btn-default btn-group-justified btn-summary" data-toggle="tooltip" title="View products ordered by users and track their payment statuses" href="{{ path('orders_account', {'order_id': order.id }) }}">Payment tracking</a>
+                    <a class="btn btn-default btn-group-justified btn-summary" data-toggle="tooltip" title="Delete product and all data associated with it" href="{{ path('order_delete', {'order_id': order.id }) }}">Delete</a>
                 </div>
             </div>
         {% endfor %}
@@ -33,5 +33,4 @@
         {% if created_orders|length == 12 or joined_orders|length == 12 %}<a class="btn btn-success text-center" href="{{ path('orders_open', {'page_number': page_number+1, 'per_page' : per_page }) }}">Next page</a>{% endif %}
         <br>
     </div>
-
 {% endblock %}
