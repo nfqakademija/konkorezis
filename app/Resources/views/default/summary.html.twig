@@ -8,13 +8,13 @@
             <div class="col-md-6"> <h4><a href="{{ order.supplierMenuLink }}" target="_blank">View menu</a></h4></div>
             <div class="col-md-12">{{ order.description }}</div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" id="order_details_row">
             <div class="col-md-4"><b>Buying time: </b>{{ order.eventDate|date("Y-m-d H:i") }}</div>
             <div class="col-md-4"><b>Closing after: </b>{{ closing_after }}</div>
             <div class="col-md-4"><b>Delivery address: </b>{{ order.address }}</div>
         </div>
     </div>
-    <table class="table">
+    <table id="summary-table" class="table col-md-12">
         <thead>
         <tr>
             <th>Product</th>
