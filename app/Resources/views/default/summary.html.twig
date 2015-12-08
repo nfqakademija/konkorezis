@@ -26,8 +26,7 @@
         </thead>
         <tbody>
         {% for product in products %}
-            {% if user_product_qty[loop.index0]['qty'] == 0 %}
-            {% else %}
+            {% if user_product_qty[loop.index0]['qty'] != 0 %}
             <tr>
             <td>{{ product.title }}</td>
             <td><a href="{{ product.link }}" target="_blank">View product</a></td>
@@ -37,7 +36,7 @@
             </tr>
             {% endif %}
         {% endfor %}
-            <tr><td></td><td></td><td></td><td style="text-align: right;"><b>Overall sum:</b></td><td>{{ user_product_qty['order_sum'] }}</td></tr>
+            <tr><td></td><td></td><td></td><td class="text-right"><b>Overall sum:</b></td><td>{{ user_product_qty['order_sum'] }}</td></tr>
         </tbody>
     </table>
 
