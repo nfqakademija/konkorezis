@@ -29,7 +29,7 @@
                 <tr>
                 <td>{{ participant['email'] }}</td>
                 <td>
-                    <table class="table">
+                    <table class="table products-details">
                         {% for pkey, product in participant %}
                             {% if pkey is same as ('email') or pkey is same as ('overall_sum') %}
                             {% else %}

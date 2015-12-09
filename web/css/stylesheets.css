@@ -101,3 +101,6 @@
 .text-right {
     text-align: right;
 }
+.products-details td:nth-child(2), td:nth-child(3), td:nth-child(4) {
+    width: 10%;
+}
