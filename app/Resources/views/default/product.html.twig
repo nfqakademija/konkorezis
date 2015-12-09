@@ -9,7 +9,7 @@
                value="{{ quantity }}">
     </div>
     <div class="col-md-4">
-        <a href="{{ product.link }}" target="_blank">View product</a>
+        {% if product.link %}<a href="{{ product.link }}" target="_blank">View product</a>{% else %}&nbsp;{% endif %}
         <button class="btn btn-default btn-group-justified" onclick="increaseQuantity({{ order.id }}, {{ product.id }});"> <span class="glyphicon glyphicon-plus"></span> </button>
     </div>
 </div>
