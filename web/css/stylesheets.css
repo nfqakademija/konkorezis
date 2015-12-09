@@ -98,3 +98,6 @@
 #order_details_row {
     margin: 45px 0;
 }
+.text-right {
+    text-align: right;
+}

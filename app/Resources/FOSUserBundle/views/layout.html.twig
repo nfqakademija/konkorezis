@@ -3,16 +3,10 @@
 {% block title %}Register / Login to Konkorezis&trade;{% endblock %}
 
 {% block body %}
-    <a href="{{ path('homepage') }}"><img class="logo" src="{{ asset('img/logo.png') }}"/></a>
     <div>
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-            <a href="{{ path('fos_user_security_logout') }}">
-                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-            </a>
-            <br><br>
-        {#{% else %}#}
-            {#<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>#}
+        {% else %}
+            <a href="{{ path('homepage') }}"><img class="logo" src="{{ asset('img/logo.png') }}"/></a>
         {% endif %}
 
 
